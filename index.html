@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Nova Divulgação - Protótipo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --laranja: #F39200;
+            --fundo: #0E1117;
+            --card: #1E1E1E;
+            --texto: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--fundo);
+            color: var(--texto);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Simulada */
+        .sidebar {
+            width: 100%;
+            background-color: #262730;
+            padding: 20px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .logo-img {
+            max-width: 200px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid var(--laranja);
+        }
+
+        /* Main Content */
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1, h3 { color: var(--laranja); }
+
+        /* Grid de Cards */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid var(--laranja);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .card i { color: var(--laranja); font-size: 1.5rem; margin-bottom: 10px; }
+        .card .val { font-size: 2rem; font-weight: bold; display: block; }
+        .card .label { color: #aaa; font-size: 0.9rem; }
+
+        /* Tabela */
+        .table-container {
+            background-color: var(--card);
+            border-radius: 12px;
+            overflow-x: auto;
+            border: 1px solid #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        th { color: var(--laranja); }
+
+        /* Simulação de Mapa */
+        .map-placeholder {
+            width: 100%;
+            height: 300px;
+            background-color: #2d2d2d;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--laranja);
+            margin-top: 20px;
+        }
+
+        @media (min-width: 768px) {
+            body { flex-direction: row; }
+            .sidebar { width: 250px; height: 100vh; position: fixed; }
+            .container { margin-left: 270px; width: calc(100% - 270px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <img src="nova_divulgacao_logo.png" alt="Logo Nova Divulgação" class="logo-img">
+        <h3>Painel Operacional</h3>
+        <p style="font-size: 0.8rem; color: #888;">Protótipo de Gestão v1.0</p>
+    </div>
+
+    <div class="container">
+        <h1>Nova Divulgação Logística</h1>
+        <p>Gestão de Campanhas e Monitoramento em Tempo Real</p>
+
+        <div class="metrics-grid">
+            <div class="card">
+                <i class="fas fa-file-alt"></i>
+                <span class="label">Panfletos Hoje</span>
+                <span class="val">18.250</span>
+            </div>
+            <div class="card">
+                <i class="fas fa-truck"></i>
+                <span class="label">Km Percorridos</span>
+                <span class="val">58 km</span>
+            </div>
+            <div class="card">
+                <i class="fas fa-users"></i>
+                <span class="label">Equipes Ativas</span>
+                <span class="val">03</span>
+            </div>
+        </div>
+
+        <h3>📋 Campanhas Ativas</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Serviço</th>
+                        <th>Status</th>
+                        <th>Bairro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Supermercado Baratão</td>
+                        <td>Panfletagem</td>
+                        <td style="color: #00ff00;">Ativa</td>
+                        <td>Vila Nova</td>
+                    </tr>
+                    <tr>
+                        <td>Loja Central</td>
+                        <td>Carro de Som</td>
+                        <td style="color: #f39200;">Pausa Almoço</td>
+                        <td>Centro</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>📍 Demonstração de Rastreamento</h3>
+        <div class="map-placeholder">
+            <div style="text-align: center;">
+                <i class="fas fa-map-marked-alt" style="font-size: 3rem; color: var(--laranja); margin-bottom: 10px;"></i>
+                <p>Simulação de Mapa GPS Ativa<br><small>(Interatividade habilitada na versão final)</small></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
