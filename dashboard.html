@@ -1,44 +1,21 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="pt-br">
 <head>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="../style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Divulgação - Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-<div class="container">
-
-<h2>Dashboard</h2>
-
-<div class="card">
-
-Bem vindo ao Planfeto
-
-</div>
-
-<div class="card">
-
-Funcionalidade futura do app
-
-</div>
-
-</div>
-
-<div class="menu">
-
-<a href="dashboard.html">Home</a>
-
-<a href="mapa.html">Mapa</a>
-
-<a href="perfil.html">Perfil</a>
-
-</div>
-
+    <div class="login-container">
+        <div class="login-card">
+            <h3>Portal Nova Divulgação</h3>
+            <p style="font-size: 0.8rem; color: #8B949E;">admin, func ou cliente (123)</p>
+            <input type="text" id="user" placeholder="Usuário">
+            <input type="password" id="pass" placeholder="Senha">
+            <button class="btn" onclick="autenticar()">ENTRAR</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
-
 </html>
