@@ -3,29 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acesso Restrito - Nova Divulgação</title>
+    <title>Nova Divulgação - Multi-Acesso</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primaria: #F39200; --fundo: #0E1117; --card: #161B22; --texto: #C9D1D9; --borda: #30363D; }
         body { font-family: 'Inter', sans-serif; background: var(--fundo); margin: 0; color: var(--texto); }
         
-        /* TELA DE LOGIN */
-        #login-page {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #0E1117 0%, #1c1f26 100%);
-        }
-        .login-card { background: var(--card); padding: 40px; border-radius: 12px; border: 1px solid var(--borda); width: 100%; max-width: 350px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .login-card img { width: 120px; margin-bottom: 20px; border-radius: 10px; }
+        /* LOGIN */
+        #login-page { height: 100vh; display: flex; align-items: center; justify-content: center; background: #0E1117; }
+        .login-card { background: var(--card); padding: 40px; border-radius: 12px; border: 1px solid var(--borda); width: 100%; max-width: 320px; text-align: center; }
         
-        /* SISTEMA (ESCONDIDO INICIALMENTE) */
+        /* SISTEMA */
         #main-system { display: none; }
-
-        .header { background: #161B22; padding: 10px 30px; display: flex; align-items: center; border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 100; justify-content: space-between; }
+        .header { background: #161B22; padding: 10px 30px; display: flex; align-items: center; border-bottom: 1px solid var(--borda); justify-content: space-between; }
         .nav-tabs { display: flex; gap: 10px; }
-        .tab { cursor: pointer; padding: 10px 15px; border-radius: 6px; color: #8B949E; font-size: 0.85rem; transition: 0.3s; }
+        .tab { cursor: pointer; padding: 10px 15px; border-radius: 6px; color: #8B949E; font-size: 0.85rem; }
         .tab.active { background: var(--borda); color: var(--primaria); border: 1px solid var(--primaria); }
         
         .container { padding: 25px; max-width: 1200px; margin: auto; }
@@ -34,126 +26,122 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .card { background: var(--card); border-radius: 8px; padding: 20px; border: 1px solid var(--borda); margin-bottom: 20px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        
-        .btn { background: var(--primaria); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; }
-        .btn:hover { filter: brightness(1.2); }
-
+        .btn { background: var(--primaria); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
         .input-dark { background: #0D1117; border: 1px solid var(--borda); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 15px; box-sizing: border-box; }
-        table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; font-size: 0.7rem; color: #8B949E; padding: 12px; border-bottom: 1px solid var(--borda); }
-        td { padding: 12px; border-bottom: 1px solid var(--borda); font-size: 0.85rem; }
+        
+        /* CORES DE STATUS */
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
+        .badge-admin { background: #238636; color: white; }
+        .badge-func { background: #1f6feb; color: white; }
+        .badge-cli { background: #8957e5; color: white; }
     </style>
 </head>
 <body>
 
     <div id="login-page">
         <div class="login-card">
-            <img src="nova_divulgacao_logo.png" alt="Logo">
-            <h3 style="color: var(--primaria)">Acesso ao Painel</h3>
-            <p style="font-size: 0.8rem; color: #8B949E; margin-bottom: 20px;">Nova Divulgação Logística</p>
+            <img src="nova_divulgacao_logo.png" alt="Logo" style="width:100px; margin-bottom:20px;">
+            <h3 style="color: var(--primaria)">Acesso ao Sistema</h3>
             <input type="text" id="user" class="input-dark" placeholder="Usuário">
             <input type="password" id="pass" class="input-dark" placeholder="Senha">
-            <button class="btn" onclick="autenticar()">Entrar no Sistema</button>
-            <p id="erro" style="color: #f85149; font-size: 0.8rem; margin-top: 10px; display: none;">Dados incorretos.</p>
+            <button class="btn" onclick="autenticar()">Entrar</button>
+            <div style="font-size: 0.7rem; color: #555; margin-top: 15px; text-align: left;">
+                Logins de teste (senha 123):<br>
+                • admin<br>• func<br>• cliente
+            </div>
         </div>
     </div>
 
     <div id="main-system">
         <div class="header">
             <div style="display:flex; align-items:center; gap:10px;">
-                <img src="nova_divulgacao_logo.png" alt="Logo" style="height:30px;">
-                <b style="color:var(--primaria)">ADMIN v1.2</b>
+                <b style="color:var(--primaria)">NOVA DIVULGAÇÃO</b>
+                <span id="user-badge" class="badge"></span>
             </div>
-            <div class="nav-tabs">
-                <div class="tab active" onclick="openTab(event, 'dash')">📊 Dash</div>
+            <div id="nav-admin" class="nav-tabs" style="display:none;">
+                <div class="tab active" onclick="openTab(event, 'dash')">📊 Geral</div>
                 <div class="tab" onclick="openTab(event, 'cadastros')">📦 Cadastros</div>
-                <div class="tab" onclick="openTab(event, 'mapa')">📍 Tracking</div>
             </div>
-            <div style="cursor: pointer;" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> Sair</div>
+            <div style="cursor: pointer; font-size: 0.8rem;" onclick="location.reload()">Sair <i class="fas fa-sign-out-alt"></i></div>
         </div>
 
         <div class="container">
-            <div id="dash" class="content-section active">
-                <h3>📊 Visão Geral</h3>
-                <div class="grid-3">
+            
+            <div id="view-admin" class="content-section">
+                <div id="dash" class="content-section active">
+                    <h3>📊 Painel Estratégico</h3>
                     <div class="card">
-                        <p style="font-size: 0.7rem;">PANFLETOS / HOJE</p>
-                        <h2 style="color: white;">18.250</h2>
-                        <div style="width:100%; background:#30363D; height:4px;"><div style="width:75%; background:var(--primaria); height:4px;"></div></div>
-                    </div>
-                    <div class="card">
-                        <p style="font-size: 0.7rem;">STATUS DA FROTA</p>
-                        <h2 style="color: white;">Operacional</h2>
+                        <p>Total de Panfletos/Mês: <b>450.000</b></p>
+                        <p>Faturamento Estimado: <b style="color:#3FB950;">R$ 12.500,00</b></p>
                     </div>
                 </div>
+                <div id="cadastros" class="content-section">
+                    <h3>📦 Gestão de Clientes e Equipes</h3>
+                    <div class="card">Módulo de cadastro completo ativado.</div>
+                </div>
+            </div>
+
+            <div id="view-funcionario" class="content-section">
+                <h3>📲 Área do Prestador</h3>
+                <button class="btn" style="background:#238636; height:60px;">BATER PONTO (INÍCIO)</button>
+                <div class="card" style="margin-top:20px;">
+                    <p>📍 Rota Atual: <b>Taquaritinga - Bairro Laranjeiras</b></p>
+                    <button class="btn" style="background:#30363D;"><i class="fas fa-camera"></i> Registrar Comprovação</button>
+                </div>
+            </div>
+
+            <div id="view-cliente" class="content-section">
+                <h3>📋 Acompanhamento de Serviço</h3>
                 <div class="card">
-                    <h4>Log de Acessos</h4>
-                    <table>
-                        <thead><tr><th>USUÁRIO</th><th>ATIVIDADE</th><th>HORA</th></tr></thead>
-                        <tbody><tr><td>Marcelo (Gestor)</td><td>Login efetuado</td><td>Agora</td></tr></tbody>
-                    </table>
+                    <p>Cliente: <b>Supermercado Baratão</b></p>
+                    <p>Status: <span style="color:#3FB950;">● Carro em Movimento</span></p>
+                </div>
+                <div class="card" style="padding:0; overflow:hidden; height:400px; border: 1px solid var(--primaria);">
+                    <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3711.234!2d-48.50!3d-21.40!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v123456789"></iframe>
                 </div>
             </div>
 
-            <div id="cadastros" class="content-section">
-                <div class="grid-3" style="grid-template-columns: 1fr 1fr;">
-                    <div class="card">
-                        <h3>👤 Novo Cliente</h3>
-                        <input type="text" id="c-nome" class="input-dark" placeholder="Razão Social">
-                        <input type="text" id="c-cid" class="input-dark" placeholder="Cidade">
-                        <button class="btn" onclick="addCli()">Registrar Cliente</button>
-                    </div>
-                    <div class="card">
-                        <h3>🚗 Novo Prestador</h3>
-                        <input type="text" id="p-nome" class="input-dark" placeholder="Motorista">
-                        <input type="text" id="p-pla" class="input-dark" placeholder="Placa">
-                        <button class="btn" style="background:#30363D" onclick="addPre()">Vincular Equipe</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="mapa" class="content-section">
-                <div class="card" style="padding:0; overflow:hidden; height:500px; border: 2px solid var(--primaria);">
-                    <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14838.455243177696!2d-48.5152862!3d-21.4150531!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94b92316e1000001%3A0x7000000000000000!2sTaquaritinga%2C%20SP!5e0!3m2!1spt-BR!2sbr!4v1700000000000"></iframe>
-                </div>
-            </div>
         </div>
     </div>
 
     <script>
-        // Lógica de Autenticação Simples
         function autenticar() {
-            const user = document.getElementById('user').value;
+            const user = document.getElementById('user').value.toLowerCase();
             const pass = document.getElementById('pass').value;
+            const badge = document.getElementById('user-badge');
 
-            // Define um usuário e senha simples para o teste
-            if(user === "admin" && pass === "nova123") {
+            if(pass === "123") {
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('main-system').style.display = 'block';
-            } else {
-                document.getElementById('erro').style.display = 'block';
-            }
+
+                // Reset views
+                document.getElementById('view-admin').style.display = 'none';
+                document.getElementById('view-funcionario').style.display = 'none';
+                document.getElementById('view-cliente').style.display = 'none';
+                document.getElementById('nav-admin').style.display = 'none';
+
+                if(user === "admin") {
+                    document.getElementById('view-admin').style.display = 'block';
+                    document.getElementById('nav-admin').style.display = 'flex';
+                    badge.innerText = "GESTOR"; badge.className = "badge badge-admin";
+                } else if(user === "func") {
+                    document.getElementById('view-funcionario').style.display = 'block';
+                    badge.innerText = "PRESTADOR"; badge.className = "badge badge-func";
+                } else if(user === "cliente") {
+                    document.getElementById('view-cliente').style.display = 'block';
+                    badge.innerText = "CLIENTE"; badge.className = "badge badge-cli";
+                }
+            } else { alert("Senha incorreta!"); }
         }
 
         function openTab(evt, tabName) {
             var i, content, tabs;
-            content = document.getElementsByClassName("content-section");
+            content = document.querySelectorAll('#view-admin .content-section');
             for (i = 0; i < content.length; i++) { content[i].style.display = "none"; }
             tabs = document.getElementsByClassName("tab");
             for (i = 0; i < tabs.length; i++) { tabs[i].className = tabs[i].className.replace(" active", ""); }
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
-        }
-
-        function addCli() {
-            const n = document.getElementById('c-nome').value;
-            if(n) { alert('Cliente ' + n + ' pré-cadastrado no protótipo!'); document.getElementById('c-nome').value = ''; }
-        }
-
-        function addPre() {
-            const n = document.getElementById('p-nome').value;
-            if(n) { alert('Prestador ' + n + ' pré-cadastrado no protótipo!'); document.getElementById('p-nome').value = ''; }
         }
     </script>
 </body>
