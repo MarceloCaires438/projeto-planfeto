@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Planfeto</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Divulgação - Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <div class="login-container">
+        <div class="login-card">
+            <h3>Portal Nova Divulgação</h3>
+            <input type="text" id="user" placeholder="Usuário (admin, func ou cliente)">
+            <input type="password" id="pass" placeholder="Senha (123)">
+            <button class="btn" onclick="fazerLogin()">ENTRAR</button>
+        </div>
+    </div>
 
-<div class="container">
+    <script>
+        function fazerLogin() {
+            const u = document.getElementById('user').value.toLowerCase().trim();
+            const p = document.getElementById('pass').value;
 
-<h1>PLANFETO</h1>
-
-<input id="usuario" placeholder="Usuário">
-
-<input id="senha" type="password" placeholder="Senha">
-
-<button class="btn" onclick="autenticar()">ENTRAR</button>
-
-</div>
-
-<script src="script.js"></script>
-
+            if(p === "123") {
+                localStorage.setItem("usuarioLogado", u);
+                // Força o redirecionamento
+                window.location.assign("dashboard.html");
+            } else {
+                alert("Senha incorreta!");
+            }
+        }
+    </script>
 </body>
 </html>
-
