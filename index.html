@@ -3,103 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Divulgação - Google Maps Edition</title>
+    <title>Nova Divulgação - Enterprise v3.5</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primaria: #F39200; --fundo: #0E1117; --card: #161B22; --texto: #C9D1D9; --borda: #30363D; --sucesso: #238636; }
-        body { font-family: 'Inter', sans-serif; background: var(--fundo); margin: 0; color: var(--texto); }
+        body { font-family: 'Inter', sans-serif; background: var(--fundo); margin: 0; color: var(--texto); overflow-x: hidden; }
         
-        .header { background: #161B22; padding: 10px 20px; display: flex; align-items: center; border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 100; justify-content: space-between; }
-        .container { padding: 20px; max-width: 1200px; margin: auto; }
-        .card { background: var(--card); border-radius: 8px; padding: 20px; border: 1px solid var(--borda); margin-bottom: 20px; }
-        .btn { background: var(--primaria); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; }
-        
-        /* ESTILO DO MAPA GOOGLE */
-        #google-map { width: 100%; height: 400px; border-radius: 8px; border: 1px solid var(--primaria); margin-top: 10px; }
-        
+        /* LOGIN */
         #login-page { height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .input-dark { background: #0D1117; border: 1px solid var(--borda); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
+        .login-card { background: var(--card); padding: 40px; border-radius: 12px; border: 1px solid var(--borda); width: 90%; max-width: 320px; text-align: center; }
+        
+        /* HEADER */
+        .header { background: #161B22; padding: 10px 20px; display: flex; align-items: center; border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 100; justify-content: space-between; }
+        .nav-tabs { display: flex; gap: 8px; }
+        .tab { cursor: pointer; padding: 8px 12px; border-radius: 6px; color: #8B949E; font-size: 0.8rem; border: 1px solid transparent; }
+        .tab.active { background: var(--borda); color: var(--primaria); border-color: var(--primaria); }
+
+        .container { padding: 20px; max-width: 1200px; margin: auto; }
         .content-section { display: none; }
-        .content-section.active { display: block; }
+        .content-section.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .card { background: var(--card); border-radius: 8px; padding: 20px; border: 1px solid var(--borda); margin-bottom: 20px; }
+        .btn { background: var(--primaria); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; margin-top: 5px; }
+        .input-dark { background: #0D1117; border: 1px solid var(--borda); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
+        
+        /* MAPA GOOGLE */
+        .map-frame { width: 100%; height: 400px; border-radius: 8px; border: 1px solid var(--primaria); background: #000; }
+        .progress-bg { background: #30363D; border-radius: 10px; height: 10px; margin: 10px 0; }
+        .progress-fill { background: var(--primaria); height: 100%; border-radius: 10px; width: 65%; }
     </style>
 </head>
 <body>
 
     <div id="login-page">
-        <div class="login-card" style="background: var(--card); padding: 40px; border-radius: 12px; border: 1px solid var(--borda); width: 320px; text-align: center;">
-            <h3 style="color: var(--primaria)">Sistema Logístico</h3>
-            <input type="text" id="user" class="input-dark" placeholder="Usuário (cliente)">
+        <div class="login-card">
+            <h3 style="color: var(--primaria)">Portal Nova Divulgação</h3>
+            <p style="font-size: 0.8rem; margin-bottom: 20px;">Use: <b>admin</b> ou <b>cliente</b> (Senha 123)</p>
+            <input type="text" id="user" class="input-dark" placeholder="Usuário">
             <input type="password" id="pass" class="input-dark" placeholder="Senha">
-            <button class="btn" onclick="autenticar()">Acessar Mapa</button>
+            <button class="btn" onclick="autenticar()">Entrar</button>
         </div>
     </div>
 
     <div id="main-system" style="display:none;">
         <div class="header">
-            <b id="user-title" style="color:var(--primaria)">LOGÍSTICA GOOGLE</b>
-            <div style="cursor: pointer; font-size: 0.8rem;" onclick="location.reload()">Sair</div>
+            <b id="user-title" style="color:var(--primaria)">SISTEMA</b>
+            <div id="nav-area" class="nav-tabs"></div>
+            <div style="cursor: pointer; font-size: 0.8rem;" onclick="location.reload()">Sair <i class="fas fa-sign-out-alt"></i></div>
         </div>
 
         <div class="container">
-            <div id="view-cliente" class="content-section active">
-                <h3>📍 Rastreamento em Tempo Real</h3>
+            
+            <div id="view-admin" class="content-section">
+                <h3>📊 Monitoramento Administrativo</h3>
                 <div class="card">
-                    <p>Status: <b style="color:var(--sucesso)">Motorista em movimento</b></p>
-                    <small>Última atualização: <span id="time">Agora mesmo</span></small>
-                </div>
-                
-                <div id="google-map"></div>
-
-                <div class="card" style="margin-top: 20px;">
-                    <h4>Dados de Telemetria</h4>
-                    <p>Velocidade Média: 42 km/h</p>
-                    <p>Destino: Centro - Taquaritinga/SP</p>
+                    <h4>Mapa Geral de Frotas</h4>
+                    <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14841.498870198535!2d-48.5152!3d-21.4301!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94b93b54b2d51593%3A0x40e45433d45e41e0!2sFatec%20Taquaritinga!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
+
+            <div id="view-cliente" class="content-section">
+                <h3>📋 Acompanhamento do Contratante</h3>
+                <div class="card">
+                    <p>Status: <b style="color:var(--primaria)">Em andamento</b></p>
+                    <div class="progress-bg"><div class="progress-fill"></div></div>
+                </div>
+                <div class="card" style="padding:5px;">
+                    <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d30000!2d-48.5042!3d-21.4055!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1700000000000" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_AQUI&callback=initMap" async defer></script>
-
     <script>
-        let map;
-        let marker;
-
-        // Função que o Google Maps chama ao carregar
-        function initMap() {
-            // Centraliza em Taquaritinga (Fatec) por padrão
-            const centro = { lat: -21.4300, lng: -48.5152 };
+        function autenticar() {
+            const u = document.getElementById('user').value.toLowerCase();
+            const p = document.getElementById('pass').value;
+            const title = document.getElementById('user-title');
             
-            map = new google.maps.Map(document.getElementById("google-map"), {
-                zoom: 15,
-                center: centro,
-                styles: [ // Estilo Dark para o mapa combinar com seu sistema
-                    { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
-                    { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
-                    { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
-                    { featureType: "road", elementType: "geometry", stylers: [{ color: "#38414e" }] }
-                ]
-            });
+            if(p === "123") {
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('main-system').style.display = 'block';
+                hideAll();
 
-            marker = new google.maps.Marker({
-                position: centro,
-                map: map,
-                title: "Veículo de Entrega",
-                icon: "https://maps.google.com/mapfiles/ms/icons/orange-dot.png"
-            });
+                if(u === "admin") {
+                    title.innerText = "GESTOR";
+                    document.getElementById('view-admin').classList.add('active');
+                } else if(u === "cliente") {
+                    title.innerText = "CLIENTE";
+                    document.getElementById('view-cliente').classList.add('active');
+                }
+            } else { alert("Senha 123"); }
         }
 
-        function autenticar() {
-            document.getElementById('login-page').style.display = 'none';
-            document.getElementById('main-system').style.display = 'block';
-            // Tenta pegar a localização real se o senhor permitir no navegador
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((pos) => {
-                    const myPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-                    map.setCenter(myPos);
-                    marker.setPosition(myPos);
-                });
-            }
+        function hideAll() {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
         }
     </script>
 </body>
