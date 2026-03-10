@@ -3,105 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Nova Divulgação - Gestão Total</title>
+    <title>Nova Divulgação - Enterprise</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primaria: #F39200; --fundo: #f4f7f6; --texto: #333; --branco: #ffffff; --cinza: #e1e1e1; }
+        :root { --primaria: #F39200; --fundo: #0E1117; --card: #161B22; --texto: #C9D1D9; --branco: #ffffff; --borda: #30363D; }
         body { font-family: 'Inter', sans-serif; background: var(--fundo); margin: 0; color: var(--texto); }
-        .header { background: var(--branco); padding: 10px 30px; display: flex; align-items: center; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 100; justify-content: space-between; }
-        .nav-tabs { display: flex; gap: 5px; }
-        .tab { cursor: pointer; padding: 12px 18px; border-radius: 8px; color: #666; font-size: 0.85rem; font-weight: 500; transition: 0.3s; }
-        .tab.active { background: #fff4e5; color: var(--primaria); border-bottom: 3px solid var(--primaria); border-radius: 0; }
+        
+        /* Header Estilo Dark Mode */
+        .header { background: #161B22; padding: 10px 30px; display: flex; align-items: center; border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 100; justify-content: space-between; }
+        .nav-tabs { display: flex; gap: 10px; }
+        .tab { cursor: pointer; padding: 10px 15px; border-radius: 6px; color: #8B949E; font-size: 0.85rem; transition: 0.3s; }
+        .tab.active { background: var(--borda); color: var(--primaria); border: 1px solid var(--primaria); }
+        
         .container { padding: 25px; max-width: 1200px; margin: auto; }
         .content-section { display: none; animation: fadeIn 0.3s ease; }
         .content-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .card { background: var(--branco); border-radius: 12px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 25px; border: 1px solid #eee; }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px; }
-        label { font-size: 0.8rem; font-weight: 600; color: #666; display: block; margin-bottom: 5px; }
-        input, select { width: 100%; padding: 10px; border: 1px solid var(--cinza); border-radius: 6px; box-sizing: border-box; }
-        .btn { background: var(--primaria); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
-        .btn:hover { background: #d98200; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th { text-align: left; font-size: 0.75rem; color: #999; padding: 10px; border-bottom: 1px solid #eee; }
-        td { padding: 12px 10px; border-bottom: 1px solid #f9f9f9; font-size: 0.85rem; }
-        .status { padding: 3px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
-        .status-ok { background: #e6ffed; color: #28a745; }
-        .map-container { width: 100%; height: 500px; border-radius: 12px; overflow: hidden; border: 2px solid var(--primaria); }
+
+        /* Cards Estilo Dashboard Moderno */
+        .card { background: var(--card); border-radius: 8px; padding: 20px; border: 1px solid var(--borda); margin-bottom: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        
+        .stat-card { text-align: left; position: relative; }
+        .stat-card h2 { margin: 10px 0; color: var(--branco); font-size: 1.5rem; }
+        .stat-card .trend { color: #3FB950; font-size: 0.8rem; font-weight: bold; }
+
+        .btn { background: var(--primaria); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; }
+        .btn:hover { filter: brightness(1.2); }
+
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; font-size: 0.7rem; color: #8B949E; padding: 12px; border-bottom: 1px solid var(--borda); }
+        td { padding: 12px; border-bottom: 1px solid var(--borda); font-size: 0.85rem; }
+        
+        .input-dark { background: #0D1117; border: 1px solid var(--borda); color: white; padding: 10px; border-radius: 6px; width: 100%; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
     <div class="header">
         <div style="display:flex; align-items:center; gap:10px;">
-            <img src="nova_divulgacao_logo.png" alt="Logo" style="height:35px;">
-            <b style="color:var(--primaria)">NOVA DIVULGAÇÃO</b>
+            <img src="nova_divulgacao_logo.png" alt="Logo" style="height:30px;">
+            <b style="color:var(--primaria)">ADMIN v1.2</b>
         </div>
         <div class="nav-tabs">
-            <div class="tab active" onclick="openTab(event, 'cadastros')">📦 Cadastros</div>
-            <div class="tab" onclick="openTab(event, 'mapa')">📍 Mapa Real</div>
+            <div class="tab active" onclick="openTab(event, 'dash')">📊 Dash</div>
+            <div class="tab" onclick="openTab(event, 'cadastros')">📦 Cadastros</div>
+            <div class="tab" onclick="openTab(event, 'mapa')">📍 Tracking</div>
         </div>
+        <div style="color: var(--primaria); font-size: 1.2rem;"><i class="fas fa-user-circle"></i></div>
     </div>
 
     <div class="container">
         
-        <div id="cadastros" class="content-section active">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                
-                <div>
+        <div id="dash" class="content-section active">
+            <div class="grid-3">
+                <div class="card stat-card">
+                    <p>PANFLETOS / HOJE</p>
+                    <h2>18.250 <span class="trend">↑ 12%</span></h2>
+                    <div style="width:100%; background:#30363D; height:4px;"><div style="width:75%; background:var(--primaria); height:4px;"></div></div>
+                </div>
+                <div class="card stat-card">
+                    <p>CUSTO POR KM</p>
+                    <h2>R$ 1,42 <span class="trend" style="color:#f85149;">↓ 0.5%</span></h2>
+                </div>
+                <div class="card stat-card">
+                    <p>EQUIPES EM CAMPO</p>
+                    <h2>04 / 05</h2>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h4>Atividades Recentes do Sistema</h4>
+                <table>
+                    <thead><tr><th>USUÁRIO</th><th>AÇÃO</th><th>HORÁRIO</th></tr></thead>
+                    <tbody>
+                        <tr><td>Marcelo (Adm)</td><td>Acessou Relatório de Guariba</td><td>10:15</td></tr>
+                        <tr><td>João (Prestador)</td><td>Iniciou Rota Carro 01</td><td>08:30</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="cadastros" class="content-section">
+            <div class="grid-3" style="grid-template-columns: 1fr 1fr;">
+                <div class="card">
                     <h3>👤 Novo Cliente</h3>
-                    <div class="card">
-                        <div class="form-grid">
-                            <div><label>Nome/Empresa</label><input type="text" id="cli-nome" placeholder=" "></div>
-                            <div><label>Cidade</label><input type="text" id="cli-cidade" placeholder=" "></div>
-                        </div>
-                        <button class="btn" onclick="salvarCliente()">Salvar Cliente</button>
-                        <h4 style="margin-top:20px; color:#888;">Clientes na Base</h4>
-                        <table id="tabela-clientes">
-                            <thead><tr><th>NOME</th><th>CIDADE</th></tr></thead>
-                            <tbody>
-                                <tr><td>Supermercado Baratão</td><td>Taquaritinga</td></tr>
-                                <tr><td>Loja Central</td><td>Guariba</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <input type="text" id="c-nome" class="input-dark" placeholder="Razão Social">
+                    <input type="text" id="c-cid" class="input-dark" placeholder="Cidade">
+                    <button class="btn" onclick="addCli()">Registrar no Banco</button>
+                    <table id="t-cli" style="margin-top:20px;">
+                        <thead><tr><th>NOME</th><th>CIDADE</th></tr></thead>
+                        <tbody><tr><td>Supermercado Baratão</td><td>Taquaritinga</td></tr></tbody>
+                    </table>
                 </div>
-
-                <div>
+                <div class="card">
                     <h3>🚗 Novo Prestador</h3>
-                    <div class="card">
-                        <div class="form-grid">
-                            <div><label>Nome</label><input type="text" id="pre-nome" placeholder=" "></div>
-                            <div><label>Placa</label><input type="text" id="pre-placa" placeholder=" "></div>
-                        </div>
-                        <button class="btn" style="background:#333;" onclick="salvarPrestador()">Salvar Prestador</button>
-                        <h4 style="margin-top:20px; color:#888;">Equipe Cadastrada</h4>
-                        <table id="tabela-prestadores">
-                            <thead><tr><th>NOME</th><th>STATUS</th></tr></thead>
-                            <tbody>
-                                <tr><td>João Silva</td><td><span class="status status-ok">DISPONÍVEL</span></td></tr>
-                                <tr><td>Ricardo Souza</td><td><span class="status status-ok" style="background:#fff9e6; color:#f39200;">EM ROTA</span></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <input type="text" id="p-nome" class="input-dark" placeholder="Nome do Motorista">
+                    <input type="text" id="p-pla" class="input-dark" placeholder="Placa do Veículo">
+                    <button class="btn" style="background:#30363D" onclick="addPre()">Vincular Equipe</button>
+                    <table id="t-pre" style="margin-top:20px;">
+                        <thead><tr><th>MOTORISTA</th><th>VEÍCULO</th></tr></thead>
+                        <tbody><tr><td>João Silva</td><td>Corsa Wind</td></tr></tbody>
+                    </table>
                 </div>
-
             </div>
         </div>
 
         <div id="mapa" class="content-section">
-            <h3>📍 Localização em Tempo Real (Demonstração)</h3>
-            <div class="card">
-                <div class="map-container">
-                    <iframe 
-                        width="100%" 
-                        height="100%" 
-                        style="border:0" 
-                        loading="lazy" 
-                        allowfullscreen 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14841.47464082269!2d-48.5152862!3d-21.4055272!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94b923f773413867%3A0x738a9e70119280b1!2sTaquaritinga%2C%20SP!5e0!3m2!1spt-BR!2sbr!4v1700000000000">
-                    </iframe>
-                </div>
+            <div class="card" style="padding:0; overflow:hidden; height:500px;">
+                <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d59353.48398457782!2d-48.5135!3d-21.4116!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1710000000000"></iframe>
             </div>
         </div>
 
@@ -118,25 +128,22 @@
             evt.currentTarget.className += " active";
         }
 
-        function salvarCliente() {
-            const nome = document.getElementById('cli-nome').value;
-            const cidade = document.getElementById('cli-cidade').value;
-            if(nome && cidade) {
-                const tabela = document.querySelector('#tabela-clientes tbody');
-                tabela.innerHTML += `<tr><td>${nome}</td><td>${cidade}</td></tr>`;
-                document.getElementById('cli-nome').value = '';
-                document.getElementById('cli-cidade').value = '';
-            } else { alert("Preencha os campos do cliente!"); }
+        function addCli() {
+            const n = document.getElementById('c-nome').value;
+            const c = document.getElementById('c-cid').value;
+            if(n && c) {
+                document.querySelector('#t-cli tbody').innerHTML += `<tr><td>${n}</td><td>${c}</td></tr>`;
+                document.getElementById('c-nome').value = '';
+            }
         }
 
-        function salvarPrestador() {
-            const nome = document.getElementById('pre-nome').value;
-            if(nome) {
-                const tabela = document.querySelector('#tabela-prestadores tbody');
-                tabela.innerHTML += `<tr><td>${nome}</td><td><span class="status status-ok">CADASTRADO</span></td></tr>`;
-                document.getElementById('pre-nome').value = '';
-                document.getElementById('pre-placa').value = '';
-            } else { alert("Preencha o nome do prestador!"); }
+        function addPre() {
+            const n = document.getElementById('p-nome').value;
+            const p = document.getElementById('p-pla').value;
+            if(n && p) {
+                document.querySelector('#t-pre tbody').innerHTML += `<tr><td>${n}</td><td>${p}</td></tr>`;
+                document.getElementById('p-nome').value = '';
+            }
         }
     </script>
 </body>
