@@ -1,9 +1,11 @@
-function login(){
+function autenticar() {
+    const u = document.getElementById('user').value.toLowerCase().trim();
+    const p = document.getElementById('pass').value;
 
-let user = document.getElementById("usuario").value
-
-localStorage.setItem("usuario", user)
-
-window.location.href="pages/dashboard.html"
-
+    if(p === "123") {
+        localStorage.setItem("usuarioLogado", u);
+        window.location.href = "dashboard.html";
+    } else {
+        alert("Senha: 123");
+    }
 }
