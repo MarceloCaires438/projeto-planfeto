@@ -3,99 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Divulgação - Sistema Integrado</title>
+    <title>Nova Divulgação - Final v4.0</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primaria: #F39200; --fundo: #0E1117; --card: #161B22; --texto: #C9D1D9; --borda: #30363D; --sucesso: #238636; }
         body { font-family: 'Inter', sans-serif; background: var(--fundo); margin: 0; color: var(--texto); overflow-x: hidden; }
         
-        /* LOGIN */
-        #login-page { height: 100vh; display: flex; align-items: center; justify-content: center; }
+        /* TELA DE LOGIN */
+        #login-page { height: 100vh; display: flex; align-items: center; justify-content: center; z-index: 1000; position: relative; }
         .login-card { background: var(--card); padding: 40px; border-radius: 12px; border: 1px solid var(--borda); width: 90%; max-width: 320px; text-align: center; }
         
-        /* HEADER */
-        .header { background: #161B22; padding: 10px 20px; display: flex; align-items: center; border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 100; justify-content: space-between; }
-        .nav-tabs { display: flex; gap: 8px; }
-        .tab { cursor: pointer; padding: 8px 12px; border-radius: 6px; color: #8B949E; font-size: 0.8rem; border: 1px solid transparent; }
-        .tab.active { background: var(--borda); color: var(--primaria); border-color: var(--primaria); }
+        /* SISTEMA OCULTO */
+        #main-system { display: none; }
 
+        .header { background: #161B22; padding: 10px 20px; display: flex; align-items: center; border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 100; justify-content: space-between; }
         .container { padding: 20px; max-width: 1200px; margin: auto; }
+        
         .content-section { display: none; }
-        .content-section.active { display: block; animation: fadeIn 0.3s ease; }
+        .content-section.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .card { background: var(--card); border-radius: 8px; padding: 20px; border: 1px solid var(--borda); margin-bottom: 20px; }
-        .btn { background: var(--primaria); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; margin-top: 5px; }
-        .input-dark { background: #0D1117; border: 1px solid var(--borda); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
-        
-        /* MAPA E STATUS */
+        .btn { background: var(--primaria); color: white; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; margin-top: 10px; }
+        .input-dark { background: #0D1117; border: 1px solid var(--borda); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 15px; box-sizing: border-box; }
         .map-frame { width: 100%; height: 400px; border-radius: 8px; border: 1px solid var(--primaria); background: #000; }
-        .progress-bg { background: #30363D; border-radius: 10px; height: 10px; margin: 10px 0; }
-        .progress-fill { background: var(--primaria); height: 100%; border-radius: 10px; width: 65%; }
-        .status-pill { padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: bold; background: var(--sucesso); color: white; }
+        
+        .status-badge { background: var(--sucesso); color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div id="login-page">
         <div class="login-card">
-            <h3 style="color: var(--primaria)">Portal Nova Divulgação</h3>
-            <p style="font-size: 0.75rem; margin-bottom: 20px; color: #8B949E;">Acesso: admin, func ou cliente</p>
+            <h3 style="color: var(--primaria)">Acesso Nova Divulgação</h3>
+            <p style="font-size: 0.8rem; color: #8B949E; margin-bottom: 20px;">Use <b>admin</b>, <b>func</b> ou <b>cliente</b><br>Senha: <b>123</b></p>
             <input type="text" id="user" class="input-dark" placeholder="Usuário">
             <input type="password" id="pass" class="input-dark" placeholder="Senha">
-            <button class="btn" onclick="autenticar()">Entrar no Sistema</button>
+            <button class="btn" onclick="autenticar()">ENTRAR NO SISTEMA</button>
         </div>
     </div>
 
-    <div id="main-system" style="display:none;">
+    <div id="main-system">
         <div class="header">
             <div style="display:flex; align-items:center; gap:10px;">
                 <b id="user-title" style="color:var(--primaria)">SISTEMA</b>
-                <i class="fas fa-bell" style="color: #8B949E; cursor: pointer;" onclick="alert('Sem novas notificações.')"></i>
             </div>
-            <div id="nav-area" class="nav-tabs"></div>
             <div style="cursor: pointer; font-size: 0.8rem;" onclick="location.reload()">Sair <i class="fas fa-sign-out-alt"></i></div>
         </div>
 
         <div class="container">
             
             <div id="view-admin" class="content-section">
-                <h3>📊 Gestão e Monitoramento</h3>
+                <h3>📊 Dashboard do Gestor</h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
                     <div class="card">
-                        <p style="font-size: 0.7rem;">EQUIPES ATIVAS</p>
-                        <h2>04 <span class="status-pill">ONLINE</span></h2>
+                        <p style="font-size: 0.7rem;">EQUIPES ONLINE</p>
+                        <h2>04 <span class="status-badge">ATIVO</span></h2>
                     </div>
                     <div class="card">
-                        <p style="font-size: 0.7rem;">PROJEÇÃO MENSAL</p>
-                        <h2 style="color: var(--sucesso);">R$ 12.500</h2>
+                        <p style="font-size: 0.7rem;">PANFLETOS / MÊS</p>
+                        <h2>450.000</h2>
                     </div>
                 </div>
                 <div class="card">
-                    <h4>Mapa de Frotas (Google Maps)</h4>
-                    <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14828.69468972322!2d-48.5152845!3d-21.430094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94b8ce92b48e7047%3A0x1808def3145ee4e0!2sFatec%20Taquaritinga!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy"></iframe>
+                    <h4>Mapa de Monitoramento (Google Maps)</h4>
+                    <iframe class="map-frame" src="https://www.google.com/maps/contrib/106980130432450961818/reviews" loading="lazy"></iframe>
                 </div>
             </div>
 
             <div id="view-func" class="content-section">
-                <h3>📲 Painel do Prestador</h3>
-                <div class="card" id="checklist-card">
-                    <h4>Checklist de Início</h4>
+                <h3>📲 Painel da Equipe</h3>
+                <div class="card">
+                    <h4>Checklist Obrigatório</h4>
                     <label><input type="checkbox"> Uniforme e Crachá</label><br>
-                    <label><input type="checkbox"> Panfletos Carregados</label><br>
-                    <label><input type="checkbox"> Celular com GPS e Bateria</label>
-                    <button class="btn" style="background: var(--sucesso); margin-top: 15px;" onclick="iniciarTrabalho()">INICIAR ROTA</button>
+                    <label><input type="checkbox"> Material Pronto</label><br>
+                    <label><input type="checkbox"> GPS Ativo no Celular</label>
+                    <button class="btn" style="background: var(--sucesso);" onclick="alert('GPS Iniciado! O Admin e o Cliente já podem te ver.')">INICIAR TRABALHO</button>
                 </div>
-                <div class="card" id="ops-card" style="display:none;">
-                    <p>Status: <b style="color: var(--sucesso)">Trabalhando</b></p>
-                    <p>Localização GPS: <span id="lat">Ativando...</span></p>
-                    <button class="btn" onclick="pegarLocalizacao()">Atualizar GPS</button>
-                    <button class="btn" style="background:#30363D; margin-top:10px;"><i class="fas fa-camera"></i> Enviar Foto Comprovação</button>
+                <div class="card">
+                    <p>Localização Atual: <span id="gps-status">Aguardando...</span></p>
+                    <button class="btn" style="background: #30363D;" onclick="pegarLocalizacao()">Capturar Minha Posição</button>
                 </div>
             </div>
 
             <div id="view-cliente" class="content-section">
-                <h3>📋 Acompanhamento do Serviço</h3>
+                <h3>📋 Acompanhamento para Contratante</h3>
                 <div class="card">
-                    <p>Cliente: <b>Supermercado Baratão</b></p>
-                    <div class="progress-bg
+                    <p>Status: <b style="color:var(--primaria)">Em andamento (65%)</b></p>
+                    <div style="background:#30363D; border-radius:10px; height:8px;"><div style="background:var(--primaria); height:100%; width:65%; border-radius:10px;"></div></div>
+                </div>
+                <div class="card">
+                    <h4>Localização do seu Produto</h4>
+                    <iframe class="map-frame" src="https://www.google.com/maps/contrib/106980130432450961818/reviews" loading="lazy"></iframe>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function autenticar() {
+            const u = document.getElementById('user').value.toLowerCase().trim();
+            const p = document.getElementById('pass').value.trim();
+            const title = document.getElementById('user-title');
+            
+            if(p === "123") {
+                // Esconde login e mostra sistema
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('main-system').style.display = 'block';
+
+                // Esconde todas as visões antes de mostrar a correta
+                document.getElementById('view-admin').classList.remove('active');
+                document.getElementById('view-func').classList.remove('active');
+                document.getElementById('view-cliente').classList.remove('active');
+
+                if(u === "admin") {
+                    title.innerText = "GESTOR";
+                    document.getElementById('view-admin').classList.add('active');
+                } else if(u === "func") {
+                    title.innerText = "EQUIPE";
+                    document.getElementById('view-func').classList.add('active');
+                } else if(u === "cliente") {
+                    title.innerText = "CLIENTE";
+                    document.getElementById('view-cliente').classList.add('active');
+                } else {
+                    alert("Usuário não reconhecido. Use: admin, func ou cliente.");
+                    location.reload();
+                }
+            } else {
+                alert("Senha incorreta! Use: 123");
+            }
+        }
+
+        function pegarLocalizacao() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((pos) => {
+                    document.getElementById('gps-status').innerText = pos.coords.latitude.toFixed(4) + ", " + pos.coords.longitude.toFixed(4);
+                    alert("Posição capturada com sucesso!");
+                });
+            } else {
+                alert("Seu navegador não suporta GPS.");
+            }
+        }
+    </script>
+</body>
+</html>
