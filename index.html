@@ -27,7 +27,6 @@
         td { padding: 12px 10px; border-bottom: 1px solid #f9f9f9; font-size: 0.85rem; }
         .status { padding: 3px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
         .status-ok { background: #e6ffed; color: #28a745; }
-        /* Ajuste do Mapa */
         .map-container { width: 100%; height: 500px; border-radius: 12px; overflow: hidden; border: 2px solid var(--primaria); }
     </style>
 </head>
@@ -53,12 +52,12 @@
                     <h3>👤 Novo Cliente</h3>
                     <div class="card">
                         <div class="form-grid">
-                            <div><label>Nome/Empresa</label><input type="text" placeholder="Ex: Baratão"></div>
-                            <div><label>Cidade</label><input type="text" placeholder="Taquaritinga"></div>
+                            <div><label>Nome/Empresa</label><input type="text" id="cli-nome" placeholder=" "></div>
+                            <div><label>Cidade</label><input type="text" id="cli-cidade" placeholder=" "></div>
                         </div>
-                        <button class="btn">Salvar Cliente</button>
+                        <button class="btn" onclick="salvarCliente()">Salvar Cliente</button>
                         <h4 style="margin-top:20px; color:#888;">Clientes na Base</h4>
-                        <table>
+                        <table id="tabela-clientes">
                             <thead><tr><th>NOME</th><th>CIDADE</th></tr></thead>
                             <tbody>
                                 <tr><td>Supermercado Baratão</td><td>Taquaritinga</td></tr>
@@ -72,15 +71,15 @@
                     <h3>🚗 Novo Prestador</h3>
                     <div class="card">
                         <div class="form-grid">
-                            <div><label>Nome</label><input type="text" placeholder="João Silva"></div>
-                            <div><label>Placa</label><input type="text" placeholder="ABC-1234"></div>
+                            <div><label>Nome</label><input type="text" id="pre-nome" placeholder=" "></div>
+                            <div><label>Placa</label><input type="text" id="pre-placa" placeholder=" "></div>
                         </div>
-                        <button class="btn" style="background:#333;">Salvar Prestador</button>
+                        <button class="btn" style="background:#333;" onclick="salvarPrestador()">Salvar Prestador</button>
                         <h4 style="margin-top:20px; color:#888;">Equipe Cadastrada</h4>
-                        <table>
+                        <table id="tabela-prestadores">
                             <thead><tr><th>NOME</th><th>STATUS</th></tr></thead>
                             <tbody>
-                                <tr><td>João Silva (Carro 01)</td><td><span class="status status-ok">DISPONÍVEL</span></td></tr>
+                                <tr><td>João Silva</td><td><span class="status status-ok">DISPONÍVEL</span></td></tr>
                                 <tr><td>Ricardo Souza</td><td><span class="status status-ok" style="background:#fff9e6; color:#f39200;">EM ROTA</span></td></tr>
                             </tbody>
                         </table>
@@ -97,15 +96,12 @@
                     <iframe 
                         width="100%" 
                         height="100%" 
-                        frameborder="0" 
                         style="border:0" 
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d59368.51347602334!2d-48.512683!3d-21.412497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1709941000000" 
-                        allowfullscreen>
+                        loading="lazy" 
+                        allowfullscreen 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14841.47464082269!2d-48.5152862!3d-21.4055272!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94b923f773413867%3A0x738a9e70119280b1!2sTaquaritinga%2C%20SP!5e0!3m2!1spt-BR!2sbr!4v1700000000000">
                     </iframe>
                 </div>
-                <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">
-                    <i class="fas fa-info-circle"></i> Otimização: Visualizando região de atuação direta.
-                </p>
             </div>
         </div>
 
@@ -120,6 +116,27 @@
             for (i = 0; i < tabs.length; i++) { tabs[i].className = tabs[i].className.replace(" active", ""); }
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
+        }
+
+        function salvarCliente() {
+            const nome = document.getElementById('cli-nome').value;
+            const cidade = document.getElementById('cli-cidade').value;
+            if(nome && cidade) {
+                const tabela = document.querySelector('#tabela-clientes tbody');
+                tabela.innerHTML += `<tr><td>${nome}</td><td>${cidade}</td></tr>`;
+                document.getElementById('cli-nome').value = '';
+                document.getElementById('cli-cidade').value = '';
+            } else { alert("Preencha os campos do cliente!"); }
+        }
+
+        function salvarPrestador() {
+            const nome = document.getElementById('pre-nome').value;
+            if(nome) {
+                const tabela = document.querySelector('#tabela-prestadores tbody');
+                tabela.innerHTML += `<tr><td>${nome}</td><td><span class="status status-ok">CADASTRADO</span></td></tr>`;
+                document.getElementById('pre-nome').value = '';
+                document.getElementById('pre-placa').value = '';
+            } else { alert("Preencha o nome do prestador!"); }
         }
     </script>
 </body>
