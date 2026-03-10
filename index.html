@@ -3,30 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Divulgação - v4.5 Final</title>
+    <title>Nova Divulgação - Versão Estabilizada</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primaria: #F39200; --fundo: #0E1117; --card: #161B22; --texto: #C9D1D9; --borda: #30363D; --sucesso: #238636; }
         body { font-family: 'Inter', sans-serif; background: var(--fundo); margin: 0; color: var(--texto); overflow-x: hidden; }
         
+        /* LOGIN */
         #login-page { height: 100vh; display: flex; align-items: center; justify-content: center; }
         .login-card { background: var(--card); padding: 40px; border-radius: 12px; border: 1px solid var(--borda); width: 90%; max-width: 320px; text-align: center; }
         
-        #main-system { display: none; }
+        /* HEADER */
         .header { background: #161B22; padding: 10px 20px; display: flex; align-items: center; border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 100; justify-content: space-between; }
-        
+        .nav-tabs { display: flex; gap: 8px; }
+        .tab { cursor: pointer; padding: 8px 12px; border-radius: 6px; color: #8B949E; font-size: 0.8rem; border: 1px solid transparent; }
+        .tab.active { background: var(--borda); color: var(--primaria); border-color: var(--primaria); }
+
         .container { padding: 20px; max-width: 1200px; margin: auto; }
         .content-section { display: none; }
-        .content-section.active { display: block; animation: fadeIn 0.4s ease; }
+        .content-section.active { display: block; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .card { background: var(--card); border-radius: 8px; padding: 20px; border: 1px solid var(--borda); margin-bottom: 20px; }
-        .btn { background: var(--primaria); color: white; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; transition: 0.2s; }
+        .btn { background: var(--primaria); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; margin-top: 5px; }
         .input-dark { background: #0D1117; border: 1px solid var(--borda); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 15px; box-sizing: border-box; }
         
-        /* MAPA QUE NÃO RECUSA CONEXÃO */
-        .map-frame { width: 100%; height: 400px; border-radius: 8px; border: 1px solid var(--primaria); background: #000; }
-        .status-badge { background: var(--sucesso); color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; }
+        /* MAPA E IMAGENS */
+        .map-frame { width: 100%; height: 400px; border-radius: 8px; border: 1px solid var(--primaria); }
+        .photo-preview { width: 100%; border-radius: 8px; margin-top: 15px; display: none; border: 1px solid var(--borda); }
+        
+        .progress-bg { background: #30363D; border-radius: 10px; height: 10px; margin: 10px 0; }
+        .progress-fill { background: var(--primaria); height: 100%; border-radius: 10px; width: 65%; }
     </style>
 </head>
 <body>
@@ -34,16 +41,17 @@
     <div id="login-page">
         <div class="login-card">
             <h3 style="color: var(--primaria)">Acesso Nova Divulgação</h3>
-            <p style="font-size: 0.8rem; color: #8B949E; margin-bottom: 20px;">Usuário: <b>admin</b> ou <b>cliente</b><br>Senha: <b>123</b></p>
+            <p style="font-size: 0.8rem; color: #8B949E; margin-bottom: 20px;">Use: admin, func ou cliente (123)</p>
             <input type="text" id="user" class="input-dark" placeholder="Usuário">
             <input type="password" id="pass" class="input-dark" placeholder="Senha">
-            <button class="btn" onclick="autenticar()">ENTRAR</button>
+            <button class="btn" onclick="autenticar()">Entrar</button>
         </div>
     </div>
 
-    <div id="main-system">
+    <div id="main-system" style="display:none;">
         <div class="header">
             <b id="user-title" style="color:var(--primaria)">SISTEMA</b>
+            <div id="nav-area" class="nav-tabs"></div>
             <div style="cursor: pointer; font-size: 0.8rem;" onclick="location.reload()">Sair <i class="fas fa-sign-out-alt"></i></div>
         </div>
 
@@ -52,30 +60,38 @@
             <div id="view-admin" class="content-section">
                 <h3>📊 Painel do Gestor</h3>
                 <div class="card">
-                    <h4>Mapa de Frotas Ativo</h4>
-                    <iframe class="map-frame" src="https://www.openstreetmap.org/export/embed.html?bbox=-48.5444%2C-21.4363%2C-48.4719%2C-21.3915&layer=mapnik"></iframe>
+                    <p>Faturamento: <b>R$ 12.500,00</b></p>
+                    <p>Equipes Ativas: <b>04</b></p>
+                </div>
+                <div class="card">
+                    <h4>Mapa de Monitoramento</h4>
+                    <iframe class="map-frame" src="https://www.openstreetmap.org/export/embed.html?bbox=-48.5500%2C-21.4500%2C-48.3500%2C-21.3500&layer=mapnik&marker=-21.4055%2C-48.5042"></iframe>
                 </div>
             </div>
 
             <div id="view-func" class="content-section">
-                <h3>📲 Painel da Equipe</h3>
-                <div class="card">
-                    <h4>Operação de Campo</h4>
-                    <button class="btn" style="background: var(--sucesso);" onclick="alert('GPS Iniciado!')">INICIAR ROTA</button>
-                    <p style="margin-top: 15px;">Coordenadas: <span id="gps-status">Aguardando...</span></p>
-                    <button class="btn" style="background: #30363D;" onclick="pegarLocalizacao()">Capturar GPS</button>
+                <h3>📲 Painel do Prestador</h3>
+                <button class="btn" style="background:var(--sucesso); height:60px;">INICIAR ROTA</button>
+                <div class="card" style="margin-top:20px;">
+                    <p>GPS Lat: <span id="lat">---</span></p>
+                    <button class="btn" onclick="pegarLocalizacao()">Capturar GPS</button>
+                    <button class="btn" style="background:#30363D; margin-top:10px;" onclick="simularUpload()"><i class="fas fa-camera"></i> Enviar Foto</button>
+                    <img id="img-func" class="photo-preview" src="https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?auto=format&fit=crop&w=600">
                 </div>
             </div>
 
             <div id="view-cliente" class="content-section">
-                <h3>📋 Acompanhamento do Cliente</h3>
+                <h3>📋 Acompanhamento do Serviço</h3>
                 <div class="card">
-                    <p>Status: <b style="color:var(--primaria)">Em andamento (65%)</b></p>
-                    <div style="background:#30363D; border-radius:10px; height:8px;"><div style="background:var(--primaria); height:100%; width:65%; border-radius:10px;"></div></div>
+                    <p>Status: <b style="color:var(--primaria)">65% Concluído</b></p>
+                    <div class="progress-bg"><div class="progress-fill"></div></div>
+                </div>
+                <div class="card" style="padding:5px;">
+                    <iframe class="map-frame" src="https://www.openstreetmap.org/export/embed.html?bbox=-48.5500%2C-21.4500%2C-48.3500%2C-21.3500&layer=mapnik&marker=-21.4055%2C-48.5042"></iframe>
                 </div>
                 <div class="card">
-                    <h4>Localização do Veículo</h4>
-                    <iframe class="map-frame" src="https://www.openstreetmap.org/export/embed.html?bbox=-48.5444%2C-21.4363%2C-48.4719%2C-21.3915&layer=mapnik"></iframe>
+                    <h4>Fotos Comprobatórias</h4>
+                    <img class="photo-preview" style="display:block;" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600">
                 </div>
             </div>
 
@@ -91,10 +107,7 @@
             if(p === "123") {
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('main-system').style.display = 'block';
-
-                document.getElementById('view-admin').classList.remove('active');
-                document.getElementById('view-func').classList.remove('active');
-                document.getElementById('view-cliente').classList.remove('active');
+                hideAll();
 
                 if(u === "admin") {
                     title.innerText = "GESTOR";
@@ -106,14 +119,23 @@
                     title.innerText = "CLIENTE";
                     document.getElementById('view-cliente').classList.add('active');
                 }
-            } else { alert("Senha incorreta!"); }
+            } else { alert("Senha 123"); }
+        }
+
+        function hideAll() {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        }
+
+        function simularUpload() {
+            document.getElementById('img-func').style.display = 'block';
+            alert("Foto enviada com sucesso!");
         }
 
         function pegarLocalizacao() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition((pos) => {
-                    document.getElementById('gps-status').innerText = pos.coords.latitude.toFixed(4) + ", " + pos.coords.longitude.toFixed(4);
-                    alert("Posição enviada!");
+                    document.getElementById('lat').innerText = pos.coords.latitude.toFixed(4);
+                    alert("Localização capturada!");
                 });
             }
         }
