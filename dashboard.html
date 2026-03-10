@@ -3,19 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Divulgação - Login</title>
+    <title>Dashboard - Logística</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-card">
-            <h3>Portal Nova Divulgação</h3>
-            <p style="font-size: 0.8rem; color: #8B949E;">admin, func ou cliente (123)</p>
-            <input type="text" id="user" placeholder="Usuário">
-            <input type="password" id="pass" placeholder="Senha">
-            <button class="btn" onclick="autenticar()">ENTRAR</button>
+    <div class="header">
+        <b id="user-display">SISTEMA</b>
+        <a href="index.html" onclick="localStorage.clear()">Sair</a>
+    </div>
+
+    <div class="container">
+        <div id="section-admin" class="content-section">
+            <h3>📊 Resumo Geral</h3>
+            <div class="card">Equipes na rua: <b>04</b></div>
+        </div>
+
+        <div id="section-func" class="content-section">
+            <h3>📲 Identificação de Saída</h3>
+            <div class="card" id="form-registro">
+                <input type="text" id="nome-func" placeholder="Nome Completo">
+                <select id="tipo-modal">
+                    <option value="pe">A Pé (Panfletagem)</option>
+                    <option value="carro">Carro de Som</option>
+                </select>
+                <button class="btn" onclick="iniciarServico()">SALVAR E INICIAR</button>
+            </div>
+            <div id="status-servico" class="card" style="display:none; border-left: 5px solid #238636;">
+                <p>Status: <b>Em Rota</b></p>
+                <button class="btn" style="background:#30363D" onclick="alert('GPS Capturado!')">Capturar Localização</button>
+            </div>
+        </div>
+
+        <div id="section-cliente" class="content-section">
+            <h3>📋 Seu Serviço</h3>
+            <div class="card">Status da Campanha: <b>65% Concluído</b></div>
         </div>
     </div>
+
+    <div class="menu">
+        <a href="dashboard.html" class="active">Home</a>
+        <a href="mapa.html">Mapa</a>
+        <a href="perfil.html">Perfil</a>
+    </div>
+
     <script src="script.js"></script>
+    <script>
+        // Lógica para mostrar só o que o usuário logado pode ver
+        window.onload = function() {
+            const user = localStorage.getItem("usuarioLogado");
+            if(!user) window.location.href = "index.html";
+            
+            document.getElementById('user-display').innerText = user.toUpperCase();
+            if(user === "admin") document.getElementById('section-admin').style.display = "block";
+            if(user === "func") document.getElementById('section-func').style.display = "block";
+            if(user === "cliente") document.getElementById('section-cliente').style.display = "block";
+        }
+
+        function iniciarServico() {
+            const nome = document.getElementById('nome-func').value;
+            if(!nome) return alert("Digite seu nome!");
+            document.getElementById('form-registro').style.display = "none";
+            document.getElementById('status-servico').style.display = "block";
+            alert("Bom trabalho, " + nome);
+        }
+    </script>
 </body>
 </html>
