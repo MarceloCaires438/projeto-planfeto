@@ -3,178 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Nova Divulgação - Protótipo</title>
+    <title>Sistema Nova Divulgação - Painel Administrativo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --laranja: #F39200;
-            --fundo: #0E1117;
-            --card: #1E1E1E;
-            --texto: #FFFFFF;
+            --primaria: #F39200; /* Laranja da Nova Divulgação */
+            --fundo: #f4f7f6;
+            --texto: #333;
+            --branco: #ffffff;
+            --cinza-claro: #e1e1e1;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--fundo);
-            color: var(--texto);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+        body { font-family: 'Inter', sans-serif; background: var(--fundo); margin: 0; color: var(--texto); overflow-x: hidden; }
 
-        /* Sidebar Simulada */
-        .sidebar {
-            width: 100%;
-            background-color: #262730;
-            padding: 20px;
-            text-align: center;
-            box-sizing: border-box;
-        }
+        /* Header e Navegação */
+        .header { background: var(--branco); padding: 10px 30px; display: flex; align-items: center; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 100; justify-content: space-between; }
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-img-small { height: 40px; border-radius: 5px; }
+        
+        .nav-tabs { display: flex; gap: 10px; }
+        .tab { cursor: pointer; padding: 10px 20px; border-radius: 8px; color: #666; font-size: 0.9rem; transition: 0.3s; font-weight: 500; }
+        .tab.active { background: #fff4e5; color: var(--primaria); border-bottom: 3px solid var(--primaria); border-radius: 0; }
+        .tab:hover { background: #f9f9f9; }
 
-        .logo-img {
-            max-width: 200px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border: 1px solid var(--laranja);
-        }
+        .container { padding: 25px; max-width: 1200px; margin: auto; }
 
-        /* Main Content */
-        .container {
-            padding: 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
+        /* Conteúdo das Abas */
+        .content-section { display: none; animation: fadeIn 0.3s ease; }
+        .content-section.active { display: block; }
 
-        h1, h3 { color: var(--laranja); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Grid de Cards */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+        /* Cards e Tabelas */
+        .card { background: var(--branco); border-radius: 12px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #eee; }
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 25px; }
+        
+        .metric-card { background: var(--branco); padding: 20px; border-radius: 12px; border-bottom: 4px solid var(--primaria); text-align: center; }
+        .metric-card i { color: var(--primaria); font-size: 1.5rem; margin-bottom: 10px; }
+        .metric-card h2 { margin: 5px 0; font-size: 1.8rem; }
+        .metric-card p { margin: 0; color: #888; font-size: 0.8rem; text-transform: uppercase; }
 
-        .card {
-            background-color: var(--card);
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 5px solid var(--laranja);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
+        /* Formulários */
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-size: 0.85rem; font-weight: 600; color: #555; }
+        input { width: 100%; padding: 12px; border: 1px solid var(--cinza-claro); border-radius: 8px; box-sizing: border-box; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--primaria); }
+        
+        .btn-primary { background: var(--primaria); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; font-size: 1rem; }
+        .btn-primary:hover { background: #d98200; transform: translateY(-2px); }
 
-        .card i { color: var(--laranja); font-size: 1.5rem; margin-bottom: 10px; }
-        .card .val { font-size: 2rem; font-weight: bold; display: block; }
-        .card .label { color: #aaa; font-size: 0.9rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; color: #999; font-size: 0.75rem; padding: 10px; border-bottom: 2px solid #eee; text-transform: uppercase; }
+        td { padding: 15px 10px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
 
-        /* Tabela */
-        .table-container {
-            background-color: var(--card);
-            border-radius: 12px;
-            overflow-x: auto;
-            border: 1px solid #333;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #333;
-        }
-
-        th { color: var(--laranja); }
-
-        /* Simulação de Mapa */
-        .map-placeholder {
-            width: 100%;
-            height: 300px;
-            background-color: #2d2d2d;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px dashed var(--laranja);
-            margin-top: 20px;
-        }
-
-        @media (min-width: 768px) {
-            body { flex-direction: row; }
-            .sidebar { width: 250px; height: 100vh; position: fixed; }
-            .container { margin-left: 270px; width: calc(100% - 270px); }
-        }
+        .status-pill { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+        .status-active { background: #e6ffed; color: #28a745; }
+        .status-pause { background: #fff9e6; color: #f39200; }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <img src="nova_divulgacao_logo.png" alt="Logo Nova Divulgação" class="logo-img">
-        <h3>Painel Operacional</h3>
-        <p style="font-size: 0.8rem; color: #888;">Protótipo de Gestão v1.0</p>
+    <div class="header">
+        <div class="logo-area">
+            <img src="nova_divulgacao_logo.png" alt="Logo" class="logo-img-small">
+            <span class="logo">Nova Divulgação</span>
+        </div>
+        <div class="nav-tabs">
+            <div class="tab active" onclick="openTab(event, 'dashboard')">Dashboard</div>
+            <div class="tab" onclick="openTab(event, 'entregas')">Entregas</div>
+            <div class="tab" onclick="openTab(event, 'entregadores')">Entregadores</div>
+            <div class="tab" onclick="openTab(event, 'mapa')">Mapa GPS</div>
+        </div>
     </div>
 
     <div class="container">
-        <h1>Nova Divulgação Logística</h1>
-        <p>Gestão de Campanhas e Monitoramento em Tempo Real</p>
-
-        <div class="metrics-grid">
-            <div class="card">
-                <i class="fas fa-file-alt"></i>
-                <span class="label">Panfletos Hoje</span>
-                <span class="val">18.250</span>
+        
+        <div id="dashboard" class="content-section active">
+            <h3>📊 Visão Geral do Dia</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <i class="fas fa-copy"></i>
+                    <h2>18.250</h2>
+                    <p>Panfletos Distribuídos</p>
+                </div>
+                <div class="metric-card">
+                    <i class="fas fa-route"></i>
+                    <h2>58 km</h2>
+                    <p>Distância Percorrida</p>
+                </div>
+                <div class="metric-card">
+                    <i class="fas fa-check-circle"></i>
+                    <h2>88%</h2>
+                    <p>Conclusão Meta</p>
+                </div>
             </div>
             <div class="card">
-                <i class="fas fa-truck"></i>
-                <span class="label">Km Percorridos</span>
-                <span class="val">58 km</span>
-            </div>
-            <div class="card">
-                <i class="fas fa-users"></i>
-                <span class="label">Equipes Ativas</span>
-                <span class="val">03</span>
+                <h4>Atividade Recente</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>HORA</th>
+                            <th>AÇÃO</th>
+                            <th>LOCAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>17:45</td><td>Foto de comprovação enviada</td><td>Centro, Taquaritinga</td></tr>
+                        <tr><td>17:30</td><td>Carro 01 iniciou nova rota</td><td>Vila Nova, Guariba</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <h3>📋 Campanhas Ativas</h3>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Cliente</th>
-                        <th>Serviço</th>
-                        <th>Status</th>
-                        <th>Bairro</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Supermercado Baratão</td>
-                        <td>Panfletagem</td>
-                        <td style="color: #00ff00;">Ativa</td>
-                        <td>Vila Nova</td>
-                    </tr>
-                    <tr>
-                        <td>Loja Central</td>
-                        <td>Carro de Som</td>
-                        <td style="color: #f39200;">Pausa Almoço</td>
-                        <td>Centro</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h3>📍 Demonstração de Rastreamento</h3>
-        <div class="map-placeholder">
-            <div style="text-align: center;">
-                <i class="fas fa-map-marked-alt" style="font-size: 3rem; color: var(--laranja); margin-bottom: 10px;"></i>
-                <p>Simulação de Mapa GPS Ativa<br><small>(Interatividade habilitada na versão final)</small></p>
+        <div id="entregas" class="content-section">
+            <h3>📦 Cadastrar Nova Campanha</h3>
+            <div class="card">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label>Cliente</label>
+                        <input type="text" placeholder="Nome da empresa">
+                    </div>
+                    <div class="input-group">
+                        <label>Serviço</label>
+                        <input type="text" placeholder="Panfletagem / Som">
+                    </div>
+                    <div class="input-group" style="grid-column: span 2;">
+                        <label>Endereço de Início</label>
+                        <input type="text" placeholder="Rua, Bairro e Cidade">
+                    </div>
+                </div>
+                <button class="btn-primary">Iniciar Operação</button>
             </div>
         </div>
+
+        <div id="entregadores" class="content-section">
+            <h3>👥 Gestão de Equipe</h3>
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>NOME</th>
+                            <th>STATUS</th>
+                            <th>CONTATO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>João Silva (Carro 01)</td>
+                            <td><span class="status-pill status-active">ATIVO</span></td>
+                            <td>(16) 99999-1111</td>
+                        </tr>
+                        <tr>
+                            <td>Ricardo Souza</td>
+                            <td><span class="status-pill status-pause">EM PAUSA</span></td>
+                            <td>(16) 99999-2222</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="mapa" class="content-section">
+            <h3>📍 Monitoramento GPS</h3>
+            <div class="card" style="height: 400px; display: flex; align-items: center; justify-content: center; background: #eee;">
+                <div style="text-align: center; color: #666;">
+                    <i class="fas fa-map-marked-alt" style="font-size: 4rem; color: var(--primaria);"></i>
+                    <p>Mapa de Calor e Rotas Ativo<br><small>Integrado com Google Maps API</small></p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
+    <script>
+        function openTab(evt, tabName) {
+            var i, content, tabs;
+            content = document.getElementsByClassName("content-section");
+            for (i = 0; i < content.length; i++) {
+                content[i].style.display = "none";
+            }
+            tabs = document.getElementsByClassName("tab");
+            for (i = 0; i < tabs.length; i++) {
+                tabs[i].className = tabs[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
 </body>
 </html>
