@@ -3,140 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Divulgação - Enterprise v2.5</title>
+    <title>Nova Divulgação - Google Maps Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primaria: #F39200; --fundo: #0E1117; --card: #161B22; --texto: #C9D1D9; --borda: #30363D; --sucesso: #238636; }
-        body { font-family: 'Inter', sans-serif; background: var(--fundo); margin: 0; color: var(--texto); overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background: var(--fundo); margin: 0; color: var(--texto); }
         
-        /* LOGIN */
-        #login-page { height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .login-card { background: var(--card); padding: 40px; border-radius: 12px; border: 1px solid var(--borda); width: 90%; max-width: 320px; text-align: center; }
-        
-        /* HEADER */
         .header { background: #161B22; padding: 10px 20px; display: flex; align-items: center; border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 100; justify-content: space-between; }
-        .nav-tabs { display: flex; gap: 8px; }
-        .tab { cursor: pointer; padding: 8px 12px; border-radius: 6px; color: #8B949E; font-size: 0.8rem; border: 1px solid transparent; }
-        .tab.active { background: var(--borda); color: var(--primaria); border-color: var(--primaria); }
-
         .container { padding: 20px; max-width: 1200px; margin: auto; }
-        .content-section { display: none; }
-        .content-section.active { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
         .card { background: var(--card); border-radius: 8px; padding: 20px; border: 1px solid var(--borda); margin-bottom: 20px; }
-        .btn { background: var(--primaria); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; margin-top: 5px; }
-        .input-dark { background: #0D1117; border: 1px solid var(--borda); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 15px; box-sizing: border-box; }
+        .btn { background: var(--primaria); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; }
         
-        /* IMAGENS E MAPA */
-        .map-frame { width: 100%; height: 350px; border-radius: 8px; border: 1px solid var(--primaria); }
-        .photo-preview { width: 100%; border-radius: 8px; margin-top: 15px; display: none; border: 1px solid var(--borda); }
+        /* ESTILO DO MAPA GOOGLE */
+        #google-map { width: 100%; height: 400px; border-radius: 8px; border: 1px solid var(--primaria); margin-top: 10px; }
         
-        /* PROGRESSO */
-        .progress-bg { background: #30363D; border-radius: 10px; height: 10px; margin: 10px 0; }
-        .progress-fill { background: var(--primaria); height: 100%; border-radius: 10px; width: 65%; }
+        #login-page { height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .input-dark { background: #0D1117; border: 1px solid var(--borda); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
     </style>
 </head>
 <body>
 
     <div id="login-page">
-        <div class="login-card">
-            <h3 style="color: var(--primaria)">Acesso Nova Divulgação</h3>
-            <input type="text" id="user" class="input-dark" placeholder="Usuário (admin, func ou cliente)">
-            <input type="password" id="pass" class="input-dark" placeholder="Senha (123)">
-            <button class="btn" onclick="autenticar()">Entrar</button>
+        <div class="login-card" style="background: var(--card); padding: 40px; border-radius: 12px; border: 1px solid var(--borda); width: 320px; text-align: center;">
+            <h3 style="color: var(--primaria)">Sistema Logístico</h3>
+            <input type="text" id="user" class="input-dark" placeholder="Usuário (cliente)">
+            <input type="password" id="pass" class="input-dark" placeholder="Senha">
+            <button class="btn" onclick="autenticar()">Acessar Mapa</button>
         </div>
     </div>
 
     <div id="main-system" style="display:none;">
         <div class="header">
-            <b id="user-title" style="color:var(--primaria)">SISTEMA</b>
-            <div id="nav-area" class="nav-tabs"></div>
-            <div style="cursor: pointer; font-size: 0.8rem;" onclick="location.reload()">Sair <i class="fas fa-sign-out-alt"></i></div>
+            <b id="user-title" style="color:var(--primaria)">LOGÍSTICA GOOGLE</b>
+            <div style="cursor: pointer; font-size: 0.8rem;" onclick="location.reload()">Sair</div>
         </div>
 
         <div class="container">
-            
-            <div id="view-admin" class="content-section">
-                <h3>📊 Painel do Gestor</h3>
+            <div id="view-cliente" class="content-section active">
+                <h3>📍 Rastreamento em Tempo Real</h3>
                 <div class="card">
-                    <p>Faturamento: <b>R$ 12.500,00</b></p>
-                    <button class="btn" onclick="mostrarFotoExemplo()">Ver Última Comprovação</button>
-                    <img id="img-admin" class="photo-preview" src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600" alt="Exemplo">
+                    <p>Status: <b style="color:var(--sucesso)">Motorista em movimento</b></p>
+                    <small>Última atualização: <span id="time">Agora mesmo</span></small>
+                </div>
+                
+                <div id="google-map"></div>
+
+                <div class="card" style="margin-top: 20px;">
+                    <h4>Dados de Telemetria</h4>
+                    <p>Velocidade Média: 42 km/h</p>
+                    <p>Destino: Centro - Taquaritinga/SP</p>
                 </div>
             </div>
-
-            <div id="view-func" class="content-section">
-                <h3>📲 Painel do Motorista</h3>
-                <button class="btn" style="background:var(--sucesso); height:60px;">INICIAR ROTA</button>
-                <div class="card" style="margin-top:20px;">
-                    <p>GPS Lat: <span id="lat">---</span></p>
-                    <button class="btn" onclick="pegarLocalizacao()">Capturar GPS</button>
-                    <button class="btn" style="background:#30363D; margin-top:10px;" onclick="simularUpload()"><i class="fas fa-camera"></i> Enviar Foto</button>
-                    <img id="img-func" class="photo-preview" src="https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?auto=format&fit=crop&w=600" alt="Upload">
-                </div>
-            </div>
-
-            <div id="view-cliente" class="content-section">
-                <h3>📋 Seu Serviço em Tempo Real</h3>
-                <div class="card">
-                    <p>Status: <b style="color:var(--primaria)">65% Concluído</b></p>
-                    <div class="progress-bg"><div class="progress-fill"></div></div>
-                </div>
-                <div class="card" style="padding:5px;">
-                    <iframe class="map-frame" src="https://www.openstreetmap.org/export/embed.html?bbox=-48.5500%2C-21.4500%2C-48.3500%2C-21.3500&layer=mapnik&marker=-21.4055%2C-48.5042"></iframe>
-                </div>
-                <div class="card">
-                    <h4>Fotos da Panfletagem</h4>
-                    <img class="photo-preview" style="display:block;" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600" alt="Foto Cliente">
-                </div>
-            </div>
-
         </div>
     </div>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_AQUI&callback=initMap" async defer></script>
+
     <script>
-        function autenticar() {
-            const u = document.getElementById('user').value.toLowerCase();
-            const p = document.getElementById('pass').value;
-            const title = document.getElementById('user-title');
+        let map;
+        let marker;
+
+        // Função que o Google Maps chama ao carregar
+        function initMap() {
+            // Centraliza em Taquaritinga (Fatec) por padrão
+            const centro = { lat: -21.4300, lng: -48.5152 };
             
-            if(p === "123") {
-                document.getElementById('login-page').style.display = 'none';
-                document.getElementById('main-system').style.display = 'block';
-                hideAll();
+            map = new google.maps.Map(document.getElementById("google-map"), {
+                zoom: 15,
+                center: centro,
+                styles: [ // Estilo Dark para o mapa combinar com seu sistema
+                    { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+                    { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+                    { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+                    { featureType: "road", elementType: "geometry", stylers: [{ color: "#38414e" }] }
+                ]
+            });
 
-                if(u === "admin") {
-                    title.innerText = "GESTOR";
-                    document.getElementById('view-admin').classList.add('active');
-                } else if(u === "func") {
-                    title.innerText = "EQUIPE";
-                    document.getElementById('view-func').classList.add('active');
-                } else if(u === "cliente") {
-                    title.innerText = "CLIENTE";
-                    document.getElementById('view-cliente').classList.add('active');
-                }
-            } else { alert("Senha 123"); }
+            marker = new google.maps.Marker({
+                position: centro,
+                map: map,
+                title: "Veículo de Entrega",
+                icon: "https://maps.google.com/mapfiles/ms/icons/orange-dot.png"
+            });
         }
 
-        function hideAll() {
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-        }
-
-        function simularUpload() {
-            document.getElementById('img-func').style.display = 'block';
-            alert("Foto capturada e enviada com sucesso!");
-        }
-
-        function mostrarFotoExemplo() {
-            document.getElementById('img-admin').style.display = 'block';
-        }
-
-        function pegarLocalizacao() {
+        function autenticar() {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('main-system').style.display = 'block';
+            // Tenta pegar a localização real se o senhor permitir no navegador
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition((pos) => {
-                    document.getElementById('lat').innerText = pos.coords.latitude.toFixed(4);
-                    alert("Coordenadas fixadas no relatório!");
+                    const myPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                    map.setCenter(myPos);
+                    marker.setPosition(myPos);
                 });
             }
         }
