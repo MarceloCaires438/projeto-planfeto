@@ -3,148 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Divulgação - Multi-Acesso</title>
+    <title>Nova Divulgação - Enterprise v1.5</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primaria: #F39200; --fundo: #0E1117; --card: #161B22; --texto: #C9D1D9; --borda: #30363D; }
+        :root { --primaria: #F39200; --fundo: #0E1117; --card: #161B22; --texto: #C9D1D9; --borda: #30363D; --sucesso: #238636; }
         body { font-family: 'Inter', sans-serif; background: var(--fundo); margin: 0; color: var(--texto); }
         
         /* LOGIN */
-        #login-page { height: 100vh; display: flex; align-items: center; justify-content: center; background: #0E1117; }
+        #login-page { height: 100vh; display: flex; align-items: center; justify-content: center; }
         .login-card { background: var(--card); padding: 40px; border-radius: 12px; border: 1px solid var(--borda); width: 100%; max-width: 320px; text-align: center; }
         
-        /* SISTEMA */
-        #main-system { display: none; }
-        .header { background: #161B22; padding: 10px 30px; display: flex; align-items: center; border-bottom: 1px solid var(--borda); justify-content: space-between; }
-        .nav-tabs { display: flex; gap: 10px; }
-        .tab { cursor: pointer; padding: 10px 15px; border-radius: 6px; color: #8B949E; font-size: 0.85rem; }
-        .tab.active { background: var(--borda); color: var(--primaria); border: 1px solid var(--primaria); }
+        /* HEADER */
+        .header { background: #161B22; padding: 10px 20px; display: flex; align-items: center; border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 100; justify-content: space-between; }
+        .nav-tabs { display: flex; gap: 8px; }
+        .tab { cursor: pointer; padding: 8px 12px; border-radius: 6px; color: #8B949E; font-size: 0.8rem; border: 1px solid transparent; }
+        .tab.active { background: var(--borda); color: var(--primaria); border-color: var(--primaria); }
         
-        .container { padding: 25px; max-width: 1200px; margin: auto; }
+        /* NOTIFICAÇÃO ANIMADA */
+        .notif-icon { position: relative; cursor: pointer; font-size: 1.2rem; color: #8B949E; }
+        .notif-badge { position: absolute; top: -5px; right: -5px; background: #f85149; color: white; border-radius: 50%; padding: 2px 5px; font-size: 0.6rem; display: none; }
+        .notif-badge.active { display: block; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+
+        .container { padding: 20px; max-width: 1200px; margin: auto; }
         .content-section { display: none; animation: fadeIn 0.3s ease; }
         .content-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .card { background: var(--card); border-radius: 8px; padding: 20px; border: 1px solid var(--borda); margin-bottom: 20px; }
-        .btn { background: var(--primaria); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
-        .input-dark { background: #0D1117; border: 1px solid var(--borda); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 15px; box-sizing: border-box; }
-        
-        /* CORES DE STATUS */
-        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
-        .badge-admin { background: #238636; color: white; }
-        .badge-func { background: #1f6feb; color: white; }
-        .badge-cli { background: #8957e5; color: white; }
+        .btn { background: var(--primaria); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; }
+        .input-dark { background: #0D1117; border: 1px solid var(--borda); color: white; padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
+        .map-frame { width: 100%; height: 450px; border-radius: 8px; border: 1px solid var(--primaria); }
     </style>
 </head>
 <body>
 
     <div id="login-page">
         <div class="login-card">
-            <img src="nova_divulgacao_logo.png" alt="Logo" style="width:100px; margin-bottom:20px;">
-            <h3 style="color: var(--primaria)">Acesso ao Sistema</h3>
-            <input type="text" id="user" class="input-dark" placeholder="Usuário">
-            <input type="password" id="pass" class="input-dark" placeholder="Senha">
+            <h3 style="color: var(--primaria)">Portal Nova Divulgação</h3>
+            <input type="text" id="user" class="input-dark" placeholder="Usuário (admin, func ou cliente)">
+            <input type="password" id="pass" class="input-dark" placeholder="Senha (123)">
             <button class="btn" onclick="autenticar()">Entrar</button>
-            <div style="font-size: 0.7rem; color: #555; margin-top: 15px; text-align: left;">
-                Logins de teste (senha 123):<br>
-                • admin<br>• func<br>• cliente
-            </div>
         </div>
     </div>
 
-    <div id="main-system">
+    <div id="main-system" style="display:none;">
         <div class="header">
             <div style="display:flex; align-items:center; gap:10px;">
-                <b style="color:var(--primaria)">NOVA DIVULGAÇÃO</b>
-                <span id="user-badge" class="badge"></span>
+                <b style="color:var(--primaria)">ADMIN</b>
+                <div class="notif-icon" onclick="verNotif()">
+                    <i class="fas fa-bell"></i>
+                    <span id="badge" class="notif-badge">!</span>
+                </div>
             </div>
-            <div id="nav-admin" class="nav-tabs" style="display:none;">
-                <div class="tab active" onclick="openTab(event, 'dash')">📊 Geral</div>
-                <div class="tab" onclick="openTab(event, 'cadastros')">📦 Cadastros</div>
-            </div>
+            <div id="nav-area" class="nav-tabs">
+                </div>
             <div style="cursor: pointer; font-size: 0.8rem;" onclick="location.reload()">Sair <i class="fas fa-sign-out-alt"></i></div>
         </div>
 
         <div class="container">
-            
             <div id="view-admin" class="content-section">
-                <div id="dash" class="content-section active">
-                    <h3>📊 Painel Estratégico</h3>
-                    <div class="card">
-                        <p>Total de Panfletos/Mês: <b>450.000</b></p>
-                        <p>Faturamento Estimado: <b style="color:#3FB950;">R$ 12.500,00</b></p>
-                    </div>
-                </div>
-                <div id="cadastros" class="content-section">
-                    <h3>📦 Gestão de Clientes e Equipes</h3>
-                    <div class="card">Módulo de cadastro completo ativado.</div>
-                </div>
+                <h3>📊 Dashboard Geral</h3>
+                <div class="card">Resumo financeiro e operacional para o gestor.</div>
             </div>
 
-            <div id="view-funcionario" class="content-section">
-                <h3>📲 Área do Prestador</h3>
-                <button class="btn" style="background:#238636; height:60px;">BATER PONTO (INÍCIO)</button>
+            <div id="view-func" class="content-section">
+                <h3>📲 Painel do Motorista</h3>
+                <button class="btn" style="background:var(--sucesso); height:80px;" onclick="enviarAlerta('Rota Iniciada')">
+                    <i class="fas fa-play"></i> INICIAR ROTA
+                </button>
                 <div class="card" style="margin-top:20px;">
-                    <p>📍 Rota Atual: <b>Taquaritinga - Bairro Laranjeiras</b></p>
-                    <button class="btn" style="background:#30363D;"><i class="fas fa-camera"></i> Registrar Comprovação</button>
+                    <button class="btn" style="background:#30363D;" onclick="enviarAlerta('Foto de Comprovação Enviada')">
+                        <i class="fas fa-camera"></i> ENVIAR FOTO
+                    </button>
                 </div>
             </div>
 
-            <div id="view-cliente" class="content-section">
-                <h3>📋 Acompanhamento de Serviço</h3>
-                <div class="card">
-                    <p>Cliente: <b>Supermercado Baratão</b></p>
-                    <p>Status: <span style="color:#3FB950;">● Carro em Movimento</span></p>
+            <div id="view-mapa" class="content-section">
+                <h3>📍 Rastreamento em Tempo Real</h3>
+                <div class="card" id="info-cliente" style="display:none;">
+                    <p>Cliente: <b>Supermercado Baratão</b> | Status: <b style="color:var(--primaria)">Em andamento</b></p>
                 </div>
-                <div class="card" style="padding:0; overflow:hidden; height:400px; border: 1px solid var(--primaria);">
-                    <iframe width="100%" height="100%" frameborder="0" src="https://www.openstreetmap.org/export/embed.html?bbox=-48.5583%2C-21.4552%2C-48.4583%2C-21.3552&layer=mapnik"></iframe>
+                <div class="card" style="padding:5px;">
+                    <iframe class="map-frame" src="https://www.openstreetmap.org/export/embed.html?bbox=-48.5444%2C-21.4363%2C-48.4719%2C-21.3915&layer=mapnik"></iframe>
                 </div>
             </div>
-
         </div>
     </div>
 
     <script>
         function autenticar() {
-            const user = document.getElementById('user').value.toLowerCase();
-            const pass = document.getElementById('pass').value;
-            const badge = document.getElementById('user-badge');
-
-            if(pass === "123") {
+            const u = document.getElementById('user').value.toLowerCase();
+            const p = document.getElementById('pass').value;
+            const nav = document.getElementById('nav-area');
+            
+            if(p === "123") {
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('main-system').style.display = 'block';
+                
+                // Limpa abas
+                nav.innerHTML = '';
+                hideAll();
 
-                // Reset views
-                document.getElementById('view-admin').style.display = 'none';
-                document.getElementById('view-funcionario').style.display = 'none';
-                document.getElementById('view-cliente').style.display = 'none';
-                document.getElementById('nav-admin').style.display = 'none';
-
-                if(user === "admin") {
-                    document.getElementById('view-admin').style.display = 'block';
-                    document.getElementById('nav-admin').style.display = 'flex';
-                    badge.innerText = "GESTOR"; badge.className = "badge badge-admin";
-                } else if(user === "func") {
-                    document.getElementById('view-funcionario').style.display = 'block';
-                    badge.innerText = "PRESTADOR"; badge.className = "badge badge-func";
-                } else if(user === "cliente") {
-                    document.getElementById('view-cliente').style.display = 'block';
-                    badge.innerText = "CLIENTE"; badge.className = "badge badge-cli";
+                if(u === "admin") {
+                    nav.innerHTML = '<div class="tab active" onclick="openTab(event, \'view-admin\')">Geral</div><div class="tab" onclick="openTab(event, \'view-mapa\')">Mapa</div>';
+                    document.getElementById('view-admin').classList.add('active');
+                } else if(u === "func") {
+                    document.getElementById('view-func').classList.add('active');
+                } else if(u === "cliente") {
+                    nav.innerHTML = '<div class="tab active">Minha Rota</div>';
+                    document.getElementById('view-mapa').classList.add('active');
+                    document.getElementById('info-cliente').style.display = 'block';
                 }
-            } else { alert("Senha incorreta!"); }
+            } else { alert("Senha 123"); }
         }
 
-        function openTab(evt, tabName) {
-            var i, content, tabs;
-            content = document.querySelectorAll('#view-admin .content-section');
-            for (i = 0; i < content.length; i++) { content[i].style.display = "none"; }
-            tabs = document.getElementsByClassName("tab");
-            for (i = 0; i < tabs.length; i++) { tabs[i].className = tabs[i].className.replace(" active", ""); }
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
+        function hideAll() {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(s => s.classList.remove('active'));
+        }
+
+        function openTab(evt, name) {
+            hideAll();
+            document.getElementById(name).classList.add('active');
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            evt.currentTarget.classList.add('active');
+        }
+
+        function enviarAlerta(msg) {
+            alert(msg + "! Notificação enviada para o Admin e Cliente.");
+            document.getElementById('badge').classList.add('active');
+        }
+
+        function verNotif() {
+            alert("Última Notificação: Carro 01 iniciou a rota em Taquaritinga.");
+            document.getElementById('badge').classList.remove('active');
         }
     </script>
 </body>
 </html>
-
-
