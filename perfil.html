@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Nova Divulgação</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <b><i class="fas fa-user-circle"></i> MEU PERFIL</b>
+        <a href="index.html" onclick="localStorage.clear()" style="color: #f85149; text-decoration: none; font-size: 0.8rem;">Sair</a>
+    </div>
+
+    <div class="container">
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 3rem; color: var(--primaria); margin-bottom: 10px;">
+                <i class="fas fa-user-shield" id="icon-perfil"></i>
+            </div>
+            <h2 id="nome-perfil">---</h2>
+            <p id="tipo-perfil" style="color: #8B949E; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">---</p>
+        </div>
+
+        <div class="card">
+            <h4>Configurações da Conta</h4>
+            <p style="font-size: 0.9rem;">Empresa: <b>Nova Divulgação</b></p>
+            <p style="font-size: 0.9rem;">Unidade: <b>Taquaritinga / Guariba</b></p>
+            <button class="btn" style="background: #30363D; margin-top: 10px;">Alterar Senha</button>
+        </div>
+    </div>
+
+    <div class="menu">
+        <a href="dashboard.html">Home</a>
+        <a href="mapa.html">Mapa</a>
+        <a href="perfil.html" style="color: var(--primaria); font-weight: bold;">Perfil</a>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const user = localStorage.getItem("usuarioLogado");
+            if(!user) {
+                window.location.assign("index.html");
+                return;
+            }
+
+            document.getElementById('nome-perfil').innerText = user.charAt(0).toUpperCase() + user.slice(1);
+            document.getElementById('tipo-perfil').innerText = "Acesso Nível: " + user;
+
+            // Muda o ícone dependendo do cargo
+            const icon = document.getElementById('icon-perfil');
+            if(user === "admin") icon.className = "fas fa-user-shield";
+            else if(user === "func") icon.className = "fas fa-id-badge";
+            else icon.className = "fas fa-briefcase";
+        }
+    </script>
+</body>
+</html>
