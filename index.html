@@ -72,9 +72,15 @@
                 <button class="btn" style="background:var(--sucesso); height:80px;" onclick="enviarAlerta('Rota Iniciada')">
                     <i class="fas fa-play"></i> INICIAR ROTA
                 </button>
-                <div class="card" style="margin-top:20px;">
-                    <button class="btn" style="background:#30363D;" onclick="enviarAlerta('Foto de Comprovação Enviada')">
-                        <i class="fas fa-camera"></i> ENVIAR FOTO
+                <div class="card" id="gps-debug" style="border-color: #3FB950;">
+                    <h4><i class="fas fa-satellite"></i> Teste de GPS Real</h4>
+                        <p id="status-gps">Aguardando ativação...</p>
+                <div style="background: #0D1117; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 0.9rem;">
+                    LAT: <span id="lat">---</span><br>
+                    LONG: <span id="long">---</span>
+                </div>
+                    <button class="btn" style="background: #238636; margin-top: 10px;" onclick="pegarLocalizacao()">
+                        Capturar Minha Posição
                     </button>
                 </div>
             </div>
@@ -142,8 +148,41 @@
             alert("Última Notificação: Carro 01 iniciou a rota em Taquaritinga.");
             document.getElementById('badge').classList.remove('active');
         }
+
+        function pegarLocalizacao() {
+            const status = document.getElementById('status-gps');
+            const latText = document.getElementById('lat');
+            const longText = document.getElementById('long');
+        
+            if (!navigator.geolocation) {
+                status.innerText = "GPS não suportado pelo seu navegador.";
+                return;
+            }
+        
+            status.innerText = "Localizando... (Dê permissão no celular)";
+        
+            // Esta função do navegador acessa o hardware de GPS
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const latitude  = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+        
+                    status.innerText = "📍 Localização capturada!";
+                    latText.innerText = latitude.toFixed(6);
+                    longText.innerText = longitude.toFixed(6);
+                    
+                    console.log(`Posição capturada: Lat ${latitude}, Long ${longitude}`);
+                    alert("Sucesso! O sistema capturou sua posição real.");
+                },
+                () => {
+                    status.innerText = "Erro: Permissão de GPS negada.";
+                    alert("Por favor, ative o GPS do celular e dê permissão ao navegador.");
+                }
+            );
+        }
     </script>
 </body>
 </html>
+
 
 
