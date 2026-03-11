@@ -30,3 +30,29 @@ img {
     border-radius: 8px;
     margin-bottom: 15px;
 }
+/* Estilos para Imagens e Relatórios */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px auto;
+    border-radius: 8px;
+}
+
+.logo-header {
+    height: 30px;
+    width: auto;
+    vertical-align: middle;
+}
+
+.btn-relatorio {
+    background: #30363D;
+    color: var(--primaria);
+    border: 1px solid var(--primaria);
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+}
