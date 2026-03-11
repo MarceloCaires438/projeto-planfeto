@@ -83,18 +83,24 @@
 
     <script>
         function fazerLogin() {
+            const btn = document.querySelector('.btn');
             const u = document.getElementById('user').value.toLowerCase().trim();
             const p = document.getElementById('pass').value.trim();
-
+        
             if (p === "123") {
-                localStorage.setItem("usuarioLogado", u);
-                // Redireciona para a dashboard que já está funcionando
-                window.location.assign("dashboard.html");
+                btn.innerText = "AUTENTICANDO..."; // Feedback visual
+                btn.style.opacity = "0.7";
+                
+                setTimeout(() => {
+                    localStorage.setItem("usuarioLogado", u);
+                    window.location.assign("dashboard.html");
+                }, 800); // Dá um tempinho para o cliente ver que o sistema "pensou"
             } else {
-                alert("Senha incorreta! Use: 123");
+                alert("Senha incorreta!");
             }
         }
     </script>
 </body>
 </html>
+
 
