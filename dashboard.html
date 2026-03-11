@@ -125,13 +125,59 @@
 </div>
 
         <div id="section-cliente" class="hidden">
-            <div class="card">
-                <h3>📋 Acompanhamento</h3>
-                <p>Status: <b>65% Concluído</b></p>
-                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=400" style="width:100%; border-radius:8px;">
+    
+            <div class="card" style="border-top: 4px solid var(--primaria); text-align: left;">
+                <h3 style="margin-bottom: 5px;"><i class="fas fa-chart-line"></i> Status da Campanha</h3>
+                <p style="font-size: 0.8rem; color: #8B949E; margin-bottom: 15px;">Campanha: Divulgação Promocional Março</p>
+                
+                <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px;">
+                    <span>Progresso da Entrega</span>
+                    <b style="color: var(--primaria);">65%</b>
+                </div>
+                <div style="background: #30363D; border-radius: 10px; height: 15px; width: 100%; margin-bottom: 15px;">
+                    <div style="background: var(--primaria); height: 100%; border-radius: 10px; width: 65%; box-shadow: 0 0 10px rgba(243, 146, 0, 0.4);"></div>
+                </div>
+        
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="background: #0D1117; padding: 10px; border-radius: 8px; text-align: center;">
+                        <small style="color: #8B949E; display: block;">Panfletos</small>
+                        <b>3.250 / 5.000</b>
+                    </div>
+                    <div style="background: #0D1117; padding: 10px; border-radius: 8px; text-align: center;">
+                        <small style="color: #8B949E; display: block;">Área Coberta</small>
+                        <b>Taquaritinga</b>
+                    </div>
+                </div>
             </div>
+        
+            <div class="card" style="text-align: left;">
+                <h4><i class="fas fa-camera"></i> Comprovação Fotográfica</h4>
+                <p style="font-size: 0.75rem; color: #8B949E; margin-bottom: 15px;">Fotos enviadas em tempo real pela equipe de campo.</p>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?auto=format&fit=crop&w=300" style="width:100%; border-radius:5px; border: 1px solid var(--borda);">
+                        <small style="font-size: 0.65rem; color: #8B949E;">Setor: Centro (10:15)</small>
+                    </div>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=300" style="width:100%; border-radius:5px; border: 1px solid var(--borda);">
+                        <small style="font-size: 0.65rem; color: #8B949E;">Setor: Jd. Rosa (13:40)</small>
+                    </div>
+                </div>
+            </div>
+
+    <div class="card" style="text-align: left; display: flex; align-items: center; gap: 15px;">
+        <div style="font-size: 2rem; color: var(--primaria);"><i class="fas fa-user-check"></i></div>
+        <div>
+            <h4 style="margin: 0;">Equipe Responsável</h4>
+            <p style="margin: 2px 0 0; font-size: 0.8rem; color: #8B949E;">Líder: Marcos Oliveira (Equipe 02)</p>
         </div>
     </div>
+
+    <button class="btn" style="background: var(--sucesso); margin-top: 5px;" onclick="alert('Solicitação de suporte enviada ao gestor.')">
+        <i class="fab fa-whatsapp"></i> SOLICITAR SUPORTE AGORA
+    </button>
+</div>
 
     <div class="menu">
         <a href="dashboard.html" style="color:var(--primaria)">Home</a>
