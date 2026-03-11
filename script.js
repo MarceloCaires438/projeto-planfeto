@@ -52,18 +52,26 @@ window.onload = function() {
 function iniciarServico() {
     const nome = document.getElementById('nome-func').value;
     const modal = document.getElementById('modal-select').value;
+    const endereco = document.getElementById('endereco-entrega').value;
 
-    if (!nome) {
-        alert("Senhor, por favor informe seu nome.");
+    if (!nome || !endereco) {
+        alert("Senhor, por favor preencha o seu nome e o endereço atual.");
         return;
     }
 
-    const info = document.getElementById('info-rota');
-    info.innerHTML = `Líder: <b>${nome}</b> | Modal: <b>${modal === 'pe' ? 'A Pé' : 'Carro de Som'}</b>`;
-    document.getElementById('status-ativo').classList.remove('hidden');
-    alert("GPS Ativado! Boa rota, " + nome);
-}
+    // Salva os dados para que o ADM e Cliente vejam
+    localStorage.setItem("nomeAtivo", nome);
+    localStorage.setItem("modalAtivo", modal === 'pe' ? 'A Pé' : 'Carro de Som');
+    localStorage.setItem("localAtivo", endereco);
 
+    const info = document.getElementById('info-rota');
+    if(info) {
+        info.innerHTML = `Líder: <b>${nome}</b> | Local: <b>${endereco}</b>`;
+        document.getElementById('status-ativo').classList.remove('hidden');
+    }
+    
+    alert("Rota iniciada em: " + endereco);
+}
 function enviarFoto() {
     const input = document.getElementById('foto-input');
     if (input.files.length === 0) {
