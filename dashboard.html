@@ -1,84 +1,30 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Logística</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="header">
+<div class="header">
+    <div style="display:flex; align-items:center; gap:10px;">
+        <img src="nova_divulgacao_logo.png" class="logo-header">
         <b id="user-display">SISTEMA</b>
-        <a href="index.html" onclick="localStorage.clear()">Sair</a>
     </div>
+    <a href="index.html" onclick="localStorage.clear()">Sair</a>
+</div>
 
-    <div class="container">
-        <div id="section-admin" class="content-section" style="display:none;">
-            <h3>📊 Painel Administrativo</h3>
-            <div class="card">
-                <p>Última Foto de Comprovação:</p>
-                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600" style="width:100%; border-radius:8px; border:1px solid var(--borda);">
-            </div>
-        </div>
-        
-        <div id="section-cliente" class="content-section" style="display:none;">
-            <h3>📋 Seu Serviço</h3>
-            <div class="card">
-                <h4>Galeria de Entrega</h4>
-                <img src="https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?auto=format&fit=crop&w=600" style="width:100%; border-radius:8px; margin-bottom:10px;">
-                <p style="font-size:0.8rem; color:#8B949E;">Equipe flagrada em: Centro - Taquaritinga/SP</p>
-            </div>
-        </div>
-
-        <div id="section-func" class="content-section" style="display:none;">
-            <h3>📲 Cadastro de Saída</h3>
-            <div class="card" id="form-registro">
-                <input type="text" id="nome-func" placeholder="Nome do Funcionário" style="background:#0D1117; color:white; padding:10px; width:90%; margin-bottom:10px; border:1px solid #30363D;">
-                <select id="tipo-modal" style="background:#0D1117; color:white; padding:10px; width:96%; border:1px solid #30363D;">
-                    <option value="pe">A Pé (Panfletagem)</option>
-                    <option value="carro">Carro de Som</option>
-                </select>
-                <button class="btn" onclick="iniciarServico()" style="margin-top:15px;">SALVAR E INICIAR</button>
-            </div>
-            <div id="status-servico" class="card" style="display:none; border-left: 5px solid #238636;">
-                <p>Status: <b>Em Rota</b></p>
-                <button class="btn" style="background:#30363D">Capturar GPS</button>
-            </div>
-        </div>
-
-        <div id="section-cliente" class="content-section" style="display:none;">
-            <h3>📋 Relatório do Cliente</h3>
-            <div class="card">Status: <b>65% Concluído</b></div>
-        </div>
+<div id="section-admin" class="content-section" style="display:none;">
+    <h3>📊 Painel Administrativo</h3>
+    <div class="card">
+        <p>Monitoramento de Hoje:</p>
+        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600">
+        <button class="btn-relatorio" onclick="gerarPDF()">📄 GERAR RELATÓRIO PDF</button>
     </div>
+</div>
 
-    <div class="menu">
-        <a href="dashboard.html" style="color:#F39200">Home</a>
-        <a href="mapa.html">Mapa</a>
+<div id="section-cliente" class="content-section" style="display:none;">
+    <h3>📋 Seu Serviço</h3>
+    <div class="card">
+        <h4>Comprovação Visual</h4>
+        <img src="https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?auto=format&fit=crop&w=600">
     </div>
+</div>
 
-    <script>
-        window.onload = function() {
-            const user = localStorage.getItem("usuarioLogado");
-            if(!user) {
-                window.location.assign("index.html");
-                return;
-            }
-            
-            document.getElementById('user-display').innerText = user.toUpperCase();
-            
-            if(user === "admin") document.getElementById('section-admin').style.display = "block";
-            else if(user === "func") document.getElementById('section-func').style.display = "block";
-            else if(user === "cliente") document.getElementById('section-cliente').style.display = "block";
-        }
-
-        function iniciarServico() {
-            const nome = document.getElementById('nome-func').value;
-            if(!nome) return alert("Digite seu nome!");
-            document.getElementById('form-registro').style.display = "none";
-            document.getElementById('status-servico').style.display = "block";
-            alert("Trabalho iniciado para: " + nome);
-        }
-    </script>
-</body>
-</html>
+<script>
+    function gerarPDF() {
+        alert("Gerando Relatório Gerencial...\n\nO documento 'Relatorio_Nova_Divulgacao.pdf' será baixado em instantes.");
+    }
+</script>
