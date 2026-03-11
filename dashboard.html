@@ -1,29 +1,35 @@
 <div class="header">
-    <div style="text-align: center; width: 100%;">
-        <img src="nova_divulgacao_logo.png" class="logo-topo">
-    </div>
-        <a href="index.html" onclick="localStorage.clear()">Sair</a>
+    <b id="user-display">SISTEMA</b>
+    <a href="index.html" onclick="localStorage.clear()" style="color: #f85149; text-decoration: none;">Sair</a>
 </div>
 
-<div id="section-admin" class="content-section" style="display:none;">
-    <h3>📊 Painel Administrativo</h3>
-    <div class="card">
-        <p>Monitoramento de Hoje:</p>
-        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600">
-        <button class="btn-relatorio" onclick="gerarPDF()">📄 GERAR RELATÓRIO PDF</button>
+<div class="container">
+    <img src="nova_divulgacao_logo.png" alt="Logo Nova Divulgação">
+
+    <div id="section-admin" class="content-section" style="display:none;">
+        <div class="card">
+            <h3>📊 Painel Administrativo</h3>
+            <p>Status das Equipes: <b>Online</b></p>
+            <button class="btn" onclick="alert('Gerando Relatório...')">📄 GERAR PDF</button>
+        </div>
+    </div>
+
+    <div id="section-func" class="content-section" style="display:none;">
+        <div class="card">
+            <h3>📲 Cadastro de Início</h3>
+            <input type="text" id="nome-func" placeholder="Seu Nome">
+            <select id="modal">
+                <option>A Pé</option>
+                <option>Carro de Som</option>
+            </select>
+            <button class="btn" onclick="alert('Rota Iniciada!')">SALVAR E INICIAR</button>
+        </div>
+    </div>
+
+    <div id="section-cliente" class="content-section" style="display:none;">
+        <div class="card">
+            <h3>📋 Acompanhamento</h3>
+            <p>Progresso: <b>65%</b></p>
+        </div>
     </div>
 </div>
-
-<div id="section-cliente" class="content-section" style="display:none;">
-    <h3>📋 Seu Serviço</h3>
-    <div class="card">
-        <h4>Comprovação Visual</h4>
-        <img src="https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?auto=format&fit=crop&w=600">
-    </div>
-</div>
-
-<script>
-    function gerarPDF() {
-        alert("Gerando Relatório Gerencial...\n\nO documento 'Relatorio_Nova_Divulgacao.pdf' será baixado em instantes.");
-    }
-</script>
