@@ -21,6 +21,13 @@ window.onload = function() {
         window.location.assign("index.html");
         return;
     }
+        // Dentro do window.onload, após verificar o usuário:
+    const local = localStorage.getItem("localAtivo");
+    if (local) {
+        // Procura um elemento para mostrar o endereço atual (pode ser no card de Status)
+        const displayLocal = document.getElementById('local-atual-exibicao'); 
+        if (displayLocal) displayLocal.innerText = "Localização: " + local;
+    }
 
     // 2. Atualiza o nome no topo (se o elemento existir)
     const display = document.getElementById('user-display');
