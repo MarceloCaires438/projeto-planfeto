@@ -4,58 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil - Nova Divulgação</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --primaria: #F39200; --fundo: #0E1117; --card: #161B22; --texto: #C9D1D9; --borda: #30363D; --sucesso: #238636; }
+        body { font-family: sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding-bottom: 90px; }
+        
+        .header { background: var(--card); padding: 15px; border-bottom: 1px solid var(--borda); text-align: center; font-weight: bold; }
+        
+        .container { padding: 15px; max-width: 450px; margin: auto; }
+        
+        .logo-perfil { max-width: 180px; height: auto; display: block; margin: 10px auto 20px; }
+
+        .card { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid var(--borda); margin-bottom: 15px; text-align: left; }
+        
+        .user-info { text-align: center; margin-bottom: 20px; }
+        .user-info h2 { margin: 5px 0; color: var(--primaria); }
+        .badge { background: var(--borda); color: var(--primaria); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+
+        .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #21262d; font-size: 0.9rem; }
+        .info-row:last-child { border-bottom: none; }
+        .label { color: #8B949E; }
+
+        .btn-logout { background: #f85149; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .btn-suporte { background: #25D366; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; margin-top: 10px; text-decoration: none; display: block; text-align: center; }
+
+        .menu { position: fixed; bottom: 0; width: 100%; background: var(--card); border-top: 1px solid var(--borda); display: flex; justify-content: space-around; padding: 15px 0; }
+        .menu a { color: #8B949E; text-decoration: none; font-size: 0.9rem; }
+        .menu a.active { color: var(--primaria); font-weight: bold; }
+    </style>
 </head>
 <body>
-    <div class="header">
-        <b><i class="fas fa-user-circle"></i> MEU PERFIL</b>
-        <a href="index.html" onclick="localStorage.clear()" style="color: #f85149; text-decoration: none; font-size: 0.8rem;">Sair</a>
-    </div>
 
-    <div style="text-align: center; width: 100%;">
-        <img src="nova_divulgacao_logo.png" class="logo-topo">
-    </div>
+    <div class="header">PERFIL DO USUÁRIO</div>
 
     <div class="container">
-        <div class="card" style="text-align: center;">
-            <div style="font-size: 3rem; color: var(--primaria); margin-bottom: 10px;">
-                <i class="fas fa-user-shield" id="icon-perfil"></i>
-            </div>
-            <h2 id="nome-perfil">---</h2>
-            <p id="tipo-perfil" style="color: #8B949E; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">---</p>
+        <img src="nova_divulgacao_logo.png" class="logo-perfil">
+
+        <div class="user-info">
+            <div style="font-size: 50px;">👤</div>
+            <h2 id="nome-exibicao">Carregando...</h2>
+            <span class="badge" id="cargo-exibicao">USUÁRIO</span>
         </div>
 
         <div class="card">
-            <h4>Configurações da Conta</h4>
-            <p style="font-size: 0.9rem;">Empresa: <b>Nova Divulgação</b></p>
-            <p style="font-size: 0.9rem;">Unidade: <b>Taquaritinga / Guariba</b></p>
-            <button class="btn" style="background: #30363D; margin-top: 10px;">Alterar Senha</button>
+            <h4><i class="fas fa-info-circle"></i> Informações Profissionais</h4>
+            <div class="info-row">
+                <span class="label">Empresa:</span>
+                <span>Nova Divulgação</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Unidade:</span>
+                <span>Taquaritinga/SP</span>
+            </div>
+            <div id="info-extra">
+                </div>
         </div>
+
+        <div class="card">
+            <h4><i class="fas fa-headset"></i> Ajuda e Suporte</h4>
+            <p style="font-size: 0.8rem; color: #8B949E;">Problemas com o GPS ou aplicativo?</p>
+            <a href="#" class="btn-suporte" onclick="alert('Chamando suporte via WhatsApp...')">Falar com Gestor</a>
+        </div>
+
+        <button class="btn-logout" onclick="logout()">SAIR DO SISTEMA</button>
     </div>
 
     <div class="menu">
         <a href="dashboard.html">Home</a>
         <a href="mapa.html">Mapa</a>
-        <a href="perfil.html" style="color: var(--primaria); font-weight: bold;">Perfil</a>
+        <a href="perfil.html" class="active">Perfil</a>
     </div>
 
     <script>
         window.onload = function() {
             const user = localStorage.getItem("usuarioLogado");
-            if(!user) {
+            if (!user) {
                 window.location.assign("index.html");
                 return;
             }
 
-            document.getElementById('nome-perfil').innerText = user.charAt(0).toUpperCase() + user.slice(1);
-            document.getElementById('tipo-perfil').innerText = "Acesso Nível: " + user;
+            document.getElementById('nome-exibicao').innerText = user.toUpperCase();
+            document.getElementById('cargo-exibicao').innerText = "NÍVEL: " + user.toUpperCase();
 
-            // Muda o ícone dependendo do cargo
-            const icon = document.getElementById('icon-perfil');
-            if(user === "adm") icon.className = "fas fa-user-shield";
-            else if(user === "funcionario") icon.className = "fas fa-id-badge";
-            else icon.className = "fas fa-briefcase";
+            // Adiciona informações baseadas no cargo
+            const infoExtra = document.getElementById('info-extra');
+            if (user === "func") {
+                infoExtra.innerHTML = `
+                    <div class="info-row">
+                        <span class="label">Status:</span>
+                        <span style="color: var(--sucesso)">Ativo / Treinado</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">ID Colaborador:</span>
+                        <span>#00${Math.floor(Math.random() * 100)}</span>
+                    </div>
+                `;
+            } else if (user === "admin") {
+                infoExtra.innerHTML = `
+                    <div class="info-row">
+                        <span class="label">Permissão:</span>
+                        <span>Administrador Total</span>
+                    </div>
+                `;
+            }
+        };
+
+        function logout() {
+            localStorage.clear();
+            window.location.assign("index.html");
         }
     </script>
 </body>
