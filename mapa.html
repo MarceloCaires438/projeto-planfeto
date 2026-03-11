@@ -3,18 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa de Rastreio</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Mapa - Nova Divulgação</title>
+    <style>
+        :root { --primaria: #F39200; --fundo: #0E1117; --card: #161B22; --texto: #C9D1D9; --borda: #30363D; }
+        
+        body { 
+            font-family: sans-serif; 
+            background: var(--fundo); 
+            color: var(--texto); 
+            margin: 0; 
+            padding-bottom: 80px; 
+        }
+
+        .header { 
+            background: var(--card); 
+            padding: 15px; 
+            border-bottom: 1px solid var(--borda); 
+            text-align: center; 
+            font-weight: bold;
+        }
+
+        /* CONTAINER QUE CENTRALIZA O MAPA */
+        .map-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centraliza horizontalmente */
+            justify-content: center;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* ESTILO DO MAPA */
+        iframe {
+            width: 100%;
+            max-width: 450px; /* Não deixa o mapa ficar largo demais no PC */
+            height: 400px;
+            border: 2px solid var(--primaria);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .menu { 
+            position: fixed; 
+            bottom: 0; 
+            width: 100%; 
+            background: var(--card); 
+            border-top: 1px solid var(--borda); 
+            display: flex; 
+            justify-content: space-around; 
+            padding: 15px 0; 
+        }
+
+        .menu a { color: #8B949E; text-decoration: none; font-size: 0.9rem; }
+        .menu a.active { color: var(--primaria); font-weight: bold; }
+
+        .logo-topo {
+            max-width: 180px;
+            height: auto;
+            margin: 10px auto;
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <div class="header"><b>MAPA EM TEMPO REAL</b></div>
-    <div class="container">
-        <iframe class="map-frame" src="https://www.openstreetmap.org/export/embed.html?bbox=-48.55%2C-21.45%2C-48.35%2C-21.35&layer=mapnik"></iframe>
+
+    <div class="header">MAPA EM TEMPO REAL</div>
+
+    <div class="map-container">
+        <img src="nova_divulgacao_logo.png" class="logo-topo">
+        
+        <iframe 
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-48.55%2C-21.45%2C-48.35%2C-21.35&layer=mapnik" 
+            frameborder="0">
+        </iframe>
+        
+        <p style="margin-top: 15px; font-size: 0.9rem; color: #8B949E;">
+            <i class="fas fa-location-arrow"></i> Rastreamento ativo: Equipe Taquaritinga
+        </p>
     </div>
+
     <div class="menu">
         <a href="dashboard.html">Home</a>
         <a href="mapa.html" class="active">Mapa</a>
         <a href="perfil.html">Perfil</a>
     </div>
+
 </body>
 </html>
