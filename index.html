@@ -4,29 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova Divulgação - Login</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root { --primaria: #F39200; --fundo: #0E1117; --card: #161B22; --texto: #C9D1D9; --borda: #30363D; }
+        
+        body { 
+            font-family: sans-serif; 
+            background: var(--fundo); 
+            color: var(--texto); 
+            margin: 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+        }
+
+        .login-card { 
+            background: var(--card); 
+            padding: 30px; 
+            border-radius: 12px; 
+            border: 1px solid var(--borda); 
+            width: 90%; 
+            max-width: 350px; 
+            text-align: center; 
+        }
+
+        /* LOGO CONTROLADO NO LOGIN */
+        .logo-login {
+            max-width: 280px; /* Tamanho idêntico ao da dashboard para manter o padrão */
+            height: auto;
+            margin-bottom: 25px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input { 
+            background: #0D1117; 
+            color: white; 
+            border: 1px solid var(--borda); 
+            padding: 14px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            margin-bottom: 15px; 
+            border-radius: 8px; 
+            font-size: 1rem;
+        }
+
+        .btn { 
+            background: var(--primaria); 
+            color: white; 
+            border: none; 
+            padding: 15px; 
+            border-radius: 8px; 
+            width: 100%; 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .btn:hover { background: #d48100; }
+        
+        p { font-size: 0.8rem; color: #8B949E; margin-top: 15px; }
+    </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-card">
-            <h3>Portal Nova Divulgação</h3>
-            <input type="text" id="user" placeholder="Usuário (admin, func ou cliente)">
-            <input type="password" id="pass" placeholder="Senha (123)">
-            <button class="btn" onclick="fazerLogin()">ENTRAR</button>
-        </div>
+
+    <div class="login-card">
+        <img src="nova_divulgacao_logo.png" class="logo-login" alt="Logo Nova Divulgação">
+
+        <input type="text" id="user" placeholder="Usuário (admin, func, cliente)">
+        <input type="password" id="pass" placeholder="Senha">
+        
+        <button class="btn" onclick="fazerLogin()">ENTRAR</button>
+        
+        <p>Senha padrão: <b>123</b></p>
     </div>
 
     <script>
         function fazerLogin() {
             const u = document.getElementById('user').value.toLowerCase().trim();
-            const p = document.getElementById('pass').value;
+            const p = document.getElementById('pass').value.trim();
 
-            if(p === "123") {
+            if (p === "123") {
                 localStorage.setItem("usuarioLogado", u);
-                // Força o redirecionamento
+                // Redireciona para a dashboard que já está funcionando
                 window.location.assign("dashboard.html");
             } else {
-                alert("Senha incorreta!");
+                alert("Senha incorreta! Use: 123");
             }
         }
     </script>
