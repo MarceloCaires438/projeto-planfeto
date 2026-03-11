@@ -1,35 +1,100 @@
-<div class="header">
-    <b id="user-display">SISTEMA</b>
-    <a href="index.html" onclick="localStorage.clear()" style="color: #f85149; text-decoration: none;">Sair</a>
-</div>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Nova Divulgação</title>
+    <style>
+        :root { --primaria: #F39200; --fundo: #0E1117; --card: #161B22; --texto: #C9D1D9; --borda: #30363D; }
+        body { font-family: sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding-bottom: 80px; text-align: center; }
+        
+        /* LIMITADOR DA IMAGEM - ISSO RESOLVE O SEU PROBLEMA */
+        .logo-central { 
+            max-width: 280px !important; 
+            height: auto; 
+            margin: 20px auto; 
+            display: block;
+        }
 
-<div class="container">
-    <img src="nova_divulgacao_logo.png" alt="Logo Nova Divulgação">
+        .header { background: var(--card); padding: 15px; border-bottom: 1px solid var(--borda); display: flex; justify-content: space-between; align-items: center; }
+        .container { padding: 15px; max-width: 500px; margin: auto; }
+        .card { background: var(--card); padding: 20px; border-radius: 10px; border: 1px solid var(--borda); margin-bottom: 20px; }
+        
+        .btn { background: var(--primaria); color: white; border: none; padding: 14px; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; }
+        input, select { background: #0D1117; color: white; border: 1px solid var(--borda); padding: 12px; width: 100%; box-sizing: border-box; margin-bottom: 15px; border-radius: 5px; }
 
-    <div id="section-admin" class="content-section" style="display:none;">
-        <div class="card">
-            <h3>📊 Painel Administrativo</h3>
-            <p>Status das Equipes: <b>Online</b></p>
-            <button class="btn" onclick="alert('Gerando Relatório...')">📄 GERAR PDF</button>
+        .menu { position: fixed; bottom: 0; width: 100%; background: var(--card); border-top: 1px solid var(--borda); display: flex; justify-content: space-around; padding: 15px 0; }
+        .menu a { color: #8B949E; text-decoration: none; font-size: 0.9rem; }
+        
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <b id="user-display">SISTEMA</b>
+        <a href="index.html" onclick="localStorage.clear()" style="color:#f85149; text-decoration:none;">Sair</a>
+    </div>
+
+    <div class="container">
+        <img src="nova_divulgacao_logo.png" class="logo-central">
+
+        <div id="section-admin" class="hidden">
+            <div class="card">
+                <h3>📊 Painel Gestor</h3>
+                <p>Equipes Online: <b>04</b></p>
+                <button class="btn" onclick="alert('Gerando Relatório...')">📄 GERAR PDF</button>
+            </div>
+        </div>
+
+        <div id="section-func" class="hidden">
+            <div class="card">
+                <h3>📲 Iniciar Trabalho</h3>
+                <input type="text" id="nome-func" placeholder="Seu Nome">
+                <select id="modal">
+                    <option>A Pé (Panfletagem)</option>
+                    <option>Carro de Som</option>
+                </select>
+                <button class="btn" onclick="iniciarServico()">INICIAR ROTA</button>
+            </div>
+        </div>
+
+        <div id="section-cliente" class="hidden">
+            <div class="card">
+                <h3>📋 Acompanhamento</h3>
+                <p>Status: <b>65% Concluído</b></p>
+                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=400" style="width:100%; border-radius:8px;">
+            </div>
         </div>
     </div>
 
-    <div id="section-func" class="content-section" style="display:none;">
-        <div class="card">
-            <h3>📲 Cadastro de Início</h3>
-            <input type="text" id="nome-func" placeholder="Seu Nome">
-            <select id="modal">
-                <option>A Pé</option>
-                <option>Carro de Som</option>
-            </select>
-            <button class="btn" onclick="alert('Rota Iniciada!')">SALVAR E INICIAR</button>
-        </div>
+    <div class="menu">
+        <a href="dashboard.html" style="color:var(--primaria)">Home</a>
+        <a href="mapa.html">Mapa</a>
+        <a href="perfil.html">Perfil</a>
     </div>
 
-    <div id="section-cliente" class="content-section" style="display:none;">
-        <div class="card">
-            <h3>📋 Acompanhamento</h3>
-            <p>Progresso: <b>65%</b></p>
-        </div>
-    </div>
-</div>
+    <script>
+        window.onload = function() {
+            const user = localStorage.getItem("usuarioLogado");
+            if (!user) {
+                window.location.assign("index.html");
+                return;
+            }
+
+            document.getElementById('user-display').innerText = user.toUpperCase();
+
+            // Mostra a aba correta
+            if (user === "admin") document.getElementById('section-admin').classList.remove('hidden');
+            else if (user === "func") document.getElementById('section-func').classList.remove('hidden');
+            else if (user === "cliente") document.getElementById('section-cliente').classList.remove('hidden');
+        };
+
+        function iniciarServico() {
+            const nome = document.getElementById('nome-func').value;
+            if (nome) alert("Bom trabalho, " + nome + "!");
+            else alert("Digite seu nome!");
+        }
+    </script>
+</body>
+</html>
