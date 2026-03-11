@@ -40,39 +40,62 @@
         <img src="nova_divulgacao_logo.png" class="logo-central">
 
         <div id="section-admin" class="hidden">
+    
             <div class="card" style="border-top: 4px solid var(--primaria);">
-                <h3 style="margin-bottom: 10px;"><i class="fas fa-users-cog"></i> Controle de Campo</h3>
-                
-                <div style="display: flex; align-items: center; justify-content: center; padding: 20px 0;">
-                    <div style="text-align: center;">
-                        <span style="font-size: 3rem; font-weight: bold; color: var(--primaria);">04</span>
-                        <p style="margin: 0; color: #8B949E; font-size: 0.9rem;">Equipes em Operação</p>
+                <h3 style="margin-bottom: 5px;"><i class="fas fa-users-cog"></i> Controle de Campo</h3>
+                <div style="text-align: center; padding: 15px 0;">
+                    <span style="font-size: 3rem; font-weight: bold; color: var(--primaria);">04</span>
+                    <p style="margin: 0; color: #8B949E; font-size: 0.9rem;">Equipes em Operação</p>
+                </div>
+            </div>
+        
+            <div class="card" style="text-align: left;">
+                <h4><i class="fas fa-chart-bar"></i> Volume de Divulgação (Hoje)</h4>
+                <p style="font-size: 0.75rem; color: #8B949E; margin-bottom: 15px;">Meta diária: 5.000 panfletos / 8h som</p>
+        
+                <div style="margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px;">
+                        <span>Taquaritinga (Centro)</span>
+                        <b>85%</b>
+                    </div>
+                    <div style="background: #30363D; border-radius: 10px; height: 12px; width: 100%;">
+                        <div style="background: var(--primaria); height: 100%; border-radius: 10px; width: 85%;"></div>
                     </div>
                 </div>
         
-                <button class="btn" onclick="alert('Relatório consolidado enviado para o e-mail do gestor.')">
-                    <i class="fas fa-file-download"></i> GERAR RELATÓRIO GERAL
+                <div style="margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px;">
+                        <span>Guariba (Vila Rosa)</span>
+                        <b>40%</b>
+                    </div>
+                    <div style="background: #30363D; border-radius: 10px; height: 12px; width: 100%;">
+                        <div style="background: var(--primaria); height: 100%; border-radius: 10px; width: 40%;"></div>
+                    </div>
+                </div>
+        
+                <div style="margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px;">
+                        <span>Taquaritinga (Jd. Paraíso)</span>
+                        <b>62%</b>
+                    </div>
+                    <div style="background: #30363D; border-radius: 10px; height: 12px; width: 100%;">
+                        <div style="background: var(--primaria); height: 100%; border-radius: 10px; width: 62%;"></div>
+                    </div>
+                </div>
+        
+                <button class="btn-relatorio" style="margin-top: 10px;" onclick="alert('Relatório detalhado por bairro gerado com sucesso!')">
+                    <i class="fas fa-file-invoice"></i> VER DETALHES POR BAIRRO
                 </button>
             </div>
         
             <div class="card" style="text-align: left;">
-                <h4><i class="fas fa-signal" style="color: var(--sucesso);"></i> Equipes Online</h4>
-                
-                <div style="font-size: 0.85rem; border-bottom: 1px solid var(--borda); padding: 10px 0;">
-                    <b>Equipe 01 (Carro):</b> Centro - Taquaritinga <br>
-                    <small style="color: #8B949E;">Última atualização: 2 min atrás</small>
-                </div>
-        
-                <div style="font-size: 0.85rem; border-bottom: 1px solid var(--borda); padding: 10px 0;">
-                    <b>Equipe 02 (A Pé):</b> Jd. São Sebastião <br>
-                    <small style="color: #8B949E;">Última atualização: Agora</small>
-                </div>
-        
-                <div style="font-size: 0.85rem; padding: 10px 0;">
-                    <b>Equipe 03 (Carro):</b> Vila Rosa - Guariba <br>
-                    <small style="color: #8B949E;">Última atualização: 5 min atrás</small>
+                <h4><i class="fas fa-signal" style="color: var(--sucesso);"></i> Conexão em Tempo Real</h4>
+                <div style="font-size: 0.8rem; color: #8B949E;">
+                    <p>✅ Equipe 01 - Sinal Forte (GPS OK)</p>
+                    <p>✅ Equipe 02 - Sinal Forte (GPS OK)</p>
                 </div>
             </div>
+        
         </div>
 
         <div id="section-func" class="hidden">
