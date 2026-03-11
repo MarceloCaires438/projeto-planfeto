@@ -16,43 +16,26 @@ input, select { background: #0D1117; color: white; border: 1px solid var(--borda
 .menu a.active { color: var(--primaria); font-weight: bold; }
 
 .map-frame { width: 100%; height: 400px; border: 1px solid var(--primaria); border-radius: 10px; }
+/* Isso vai garantir que nenhuma imagem quebre o layout */
 img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    border: 1px solid var(--borda);
-}
-
-.photo-card {
-    background: var(--card);
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-/* Estilos para Imagens e Relatórios */
-img {
-    max-width: 100%;
+    max-width: 100%; /* Não deixa a imagem ser maior que a tela */
     height: auto;
     display: block;
     margin: 10px auto;
-    border-radius: 8px;
 }
 
-.logo-header {
-    height: 30px;
-    width: auto;
-    vertical-align: middle;
+/* Estilo específico para o logo do topo */
+.logo-topo {
+    max-width: 250px; /* Define um tamanho fixo e elegante para o logo */
+    height: auto;
+    margin-bottom: 20px;
+    border: none !important; /* Remove qualquer borda que o CSS geral coloque */
 }
 
-.btn-relatorio {
-    background: #30363D;
-    color: var(--primaria);
-    border: 1px solid var(--primaria);
-    padding: 10px;
-    border-radius: 5px;
-    width: 100%;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 15px;
+/* Ajuste do container para garantir que as coisas não sumam */
+.container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
