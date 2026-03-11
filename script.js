@@ -27,20 +27,20 @@ window.onload = function() {
     if (display) display.innerText = user.toUpperCase();
 
     // 3. Esconde todas as seções primeiro (Reset visual)
-    const sections = ["section-admin", "section-func", "section-cliente"];
+    const sections = ["section-adm", "section-funcionario", "section-cliente"];
     sections.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = "none";
     });
 
     // 4. Mostra apenas a seção do usuário logado
-    if (user === "admin") {
-        const adminSec = document.getElementById('section-admin');
-        if (adminSec) adminSec.style.display = "block";
+    if (user === "adm") {
+        const admSec = document.getElementById('section-adm');
+        if (admSec) admSec.style.display = "block";
     } 
-    else if (user === "func") {
-        const funcSec = document.getElementById('section-func');
-        if (funcSec) funcSec.style.display = "block";
+    else if (user === "funcionario") {
+        const funcionarioSec = document.getElementById('section-funcionario');
+        if (funcionarioSec) funcionarioSec.style.display = "block";
     } 
     else if (user === "cliente") {
         const clienteSec = document.getElementById('section-cliente');
@@ -50,7 +50,7 @@ window.onload = function() {
 
 // Funções extras para o Funcionário
 function iniciarServico() {
-    const nome = document.getElementById('nome-func').value;
+    const nome = document.getElementById('nome-funcionario').value;
     if (!nome) {
         alert("Por favor, preencha seu nome antes de iniciar.");
         return;
