@@ -1,41 +1,78 @@
-:root { --primaria: #F39200; --fundo: #0E1117; --card: #161B22; --texto: #C9D1D9; --borda: #30363D; }
-body { font-family: sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding-bottom: 70px; }
-
-.login-container { height: 100vh; display: flex; align-items: center; justify-content: center; }
-.login-card, .card { background: var(--card); padding: 25px; border-radius: 10px; border: 1px solid var(--borda); margin: 10px; }
-
-.header { background: var(--card); padding: 15px; border-bottom: 1px solid var(--borda); display: flex; justify-content: space-between; }
-.container { padding: 15px; }
-.content-section { display: none; }
-
-.btn { background: var(--primaria); color: white; border: none; padding: 12px; border-radius: 5px; width: 100%; cursor: pointer; font-weight: bold; }
-input, select { background: #0D1117; color: white; border: 1px solid var(--borda); padding: 12px; width: 100%; box-sizing: border-box; margin-bottom: 10px; border-radius: 5px; }
-
-.menu { position: fixed; bottom: 0; width: 100%; background: var(--card); border-top: 1px solid var(--borda); display: flex; justify-content: space-around; padding: 15px 0; }
-.menu a { color: #8B949E; text-decoration: none; font-size: 0.9rem; }
-.menu a.active { color: var(--primaria); font-weight: bold; }
-
-.map-frame { width: 100%; height: 400px; border: 1px solid var(--primaria); border-radius: 10px; }
-/* Isso vai garantir que nenhuma imagem quebre o layout */
-img {
-    max-width: 100%; /* Não deixa a imagem ser maior que a tela */
-    height: auto;
-    display: block;
-    margin: 10px auto;
+:root { 
+    --primaria: #F39200; 
+    --fundo: #0E1117; 
+    --card: #161B22; 
+    --texto: #C9D1D9; 
+    --borda: #30363D; 
 }
 
-/* Estilo específico para o logo do topo */
-.logo-topo {
-    max-width: 250px; /* Define um tamanho fixo e elegante para o logo */
-    height: auto;
-    margin-bottom: 20px;
-    border: none !important; /* Remove qualquer borda que o CSS geral coloque */
+body { 
+    font-family: 'Segoe UI', sans-serif; 
+    background: var(--fundo); 
+    color: var(--texto); 
+    margin: 0; 
+    padding-bottom: 80px; /* Espaço para o menu não cobrir nada */
 }
 
-/* Ajuste do container para garantir que as coisas não sumam */
-.container {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
+/* REGRA DE OURO PARA A IMAGEM NÃO OCUPAR TUDO */
+img { 
+    max-width: 280px; /* Limita o tamanho do logo */
+    height: auto; 
+    display: block; 
+    margin: 15px auto; 
+}
+
+.header { 
+    background: var(--card); 
+    padding: 15px; 
+    border-bottom: 1px solid var(--borda); 
+    display: flex; 
+    justify-content: space-between; 
     align-items: center;
 }
+
+.container { padding: 15px; }
+
+.card { 
+    background: var(--card); 
+    padding: 20px; 
+    border-radius: 10px; 
+    border: 1px solid var(--borda); 
+    margin-bottom: 20px; 
+}
+
+.btn { 
+    background: var(--primaria); 
+    color: white; 
+    border: none; 
+    padding: 14px; 
+    border-radius: 8px; 
+    width: 100%; 
+    font-weight: bold; 
+    cursor: pointer;
+}
+
+input, select { 
+    background: #0D1117; 
+    color: white; 
+    border: 1px solid var(--borda); 
+    padding: 12px; 
+    width: 100%; 
+    box-sizing: border-box; 
+    margin-bottom: 15px; 
+    border-radius: 5px; 
+}
+
+.menu { 
+    position: fixed; 
+    bottom: 0; 
+    width: 100%; 
+    background: var(--card); 
+    border-top: 1px solid var(--borda); 
+    display: flex; 
+    justify-content: space-around; 
+    padding: 15px 0; 
+    z-index: 1000;
+}
+
+.menu a { color: #8B949E; text-decoration: none; font-size: 0.9rem; }
