@@ -50,10 +50,33 @@ window.onload = function() {
 
 // Funções extras para o Funcionário
 function iniciarServico() {
-    const nome = document.getElementById('nome-funcionario').value;
+    const nome = document.getElementById('nome-func').value;
+    const modal = document.getElementById('modal-select').value;
+
     if (!nome) {
-        alert("Por favor, preencha seu nome antes de iniciar.");
+        alert("Senhor, por favor informe seu nome.");
         return;
     }
-    alert("Rota iniciada com sucesso, " + nome + "!");
+
+    const info = document.getElementById('info-rota');
+    info.innerHTML = `Líder: <b>${nome}</b> | Modal: <b>${modal === 'pe' ? 'A Pé' : 'Carro de Som'}</b>`;
+    document.getElementById('status-ativo').classList.remove('hidden');
+    alert("GPS Ativado! Boa rota, " + nome);
+}
+
+function enviarFoto() {
+    const input = document.getElementById('foto-input');
+    if (input.files.length === 0) {
+        alert("Selecione uma foto da entrega!");
+        return;
+    }
+
+    // Simulando o envio
+    const hora = new Date().toLocaleTimeString();
+    const fotoSimulada = "https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?auto=format&fit=crop&w=600";
+
+    localStorage.setItem("ultimaFoto", fotoSimulada);
+    localStorage.setItem("horaFoto", hora);
+
+    alert("Foto enviada! O Cliente e o ADM já podem visualizar no painel.");
 }
