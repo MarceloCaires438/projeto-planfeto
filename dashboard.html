@@ -106,30 +106,37 @@
         </div>
 
         <div id="section-func" class="hidden">
-    <div class="card">
-        <h3><i class="fas fa-running"></i> Iniciar Trabalho Hoje</h3>
-        <p style="font-size: 0.8rem; color: #8B949E; margin-bottom: 20px;">Preencha os dados abaixo para ativar o rastreamento.</p>
-        
-        <label style="display:block; text-align:left; font-size: 0.9rem; margin-bottom: 5px;">Seu Nome:</label>
-        <input type="text" id="nome-func" placeholder="Ex: João Silva">
-        
-        <label style="display:block; text-align:left; font-size: 0.9rem; margin-bottom: 5px;">Modal de Entrega:</label>
-        <select id="modal-select">
-            <option value="pe">A Pé (Panfletagem)</option>
-            <option value="carro">Carro de Som (Veículo)</option>
-        </select>
-
-        <button class="btn" onclick="iniciarServico()">ATIVAR GPS E INICIAR</button>
+    
+        <div class="card">
+            <h3><i class="fas fa-running"></i> Iniciar Trabalho</h3>
+            <label style="display:block; text-align:left; font-size: 0.9rem; margin-bottom: 5px;">Seu Nome:</label>
+            <input type="text" id="nome-func" placeholder="Ex: João Silva">
+            
+            <label style="display:block; text-align:left; font-size: 0.9rem; margin-bottom: 5px;">Modal de Entrega:</label>
+            <select id="modal-select">
+                <option value="pe">A Pé (Panfletagem)</option>
+                <option value="carro">Carro de Som (Veículo)</option>
+            </select>
+    
+            <button class="btn" onclick="iniciarServico()">ATIVAR GPS E INICIAR</button>
+        </div>
+    
+        <div id="area-fotos" class="card">
+            <h3><i class="fas fa-camera"></i> Enviar Comprovação</h3>
+            <p style="font-size: 0.8rem; color: #8B949E;">Tire uma foto para comprovar a entrega no local.</p>
+            
+            <input type="file" id="foto-input" accept="image/*" style="margin-top:10px; color: var(--texto);">
+            
+            <button class="btn" onclick="enviarFoto()" style="margin-top:15px; background: var(--sucesso);">
+                <i class="fas fa-upload"></i> ENVIAR FOTO AGORA
+            </button>
+        </div>
+    
+        <div id="status-ativo" class="card hidden" style="border-left: 5px solid var(--sucesso);">
+            <h4 style="color: var(--sucesso); margin: 0;">SISTEMA MONITORANDO</h4>
+            <p id="info-rota" style="font-size: 0.9rem;"></p>
+        </div>
     </div>
-
-    <div id="status-ativo" class="card hidden" style="border-left: 5px solid var(--sucesso);">
-        <h4 style="color: var(--sucesso); margin: 0;">SISTEMA MONITORANDO</h4>
-        <p style="font-size: 0.9rem;">Status: <b>Em Rota</b></p>
-        <button class="btn" style="background: #30363D; margin-top: 10px;" onclick="alert('GPS Atualizado!')">
-            <i class="fas fa-sync"></i> Atualizar Posição
-        </button>
-    </div>
-</div>
 
         <div id="section-cliente" class="hidden">
     
